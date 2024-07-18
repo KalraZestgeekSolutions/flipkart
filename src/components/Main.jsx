@@ -16,11 +16,7 @@ const Main = () => {
   const btnRef = useRef();
   const [sortField, setSortField] = useState(400);
   const [priceRange, setPriceRange] = useState([0, 1000]);
-  const tabs = [
-    { label: "Low to High", value: "asc", type: "sort" },
-    { label: "High to Low", value: "desc", type: "sort" },
-    { label: "Newest first", value: "createdAt", type: "sort" },
-  ];
+
   // const API_ENDPOIT = import.meta.env.VITE_PUBLIC_API_URL;
   useEffect(() => {
     const fetchData = async () => {
@@ -103,7 +99,6 @@ const Main = () => {
           isOpen={isOpen}
         >
           <Filters
-            tabsList={tabs}
             handleClearAllFilters={handleClearAllFilters}
             handleItem={handleItem}
             handleCloseFilter={handleCloseFilter}
@@ -144,7 +139,6 @@ const Main = () => {
             w={["100%"]}
           >
             <SortBy
-              tabsList={tabs}
               handleSortChange={handleSortChange}
               handleItem={handleItem}
             />

@@ -12,7 +12,6 @@ const Filters = ({
   handleItem,
   handlePriceChange,
   onClose,
-  tabsList,
   handleCloseFilter,
   handleSortChange,
 }) => {
@@ -125,7 +124,6 @@ const Filters = ({
         {/* Sort by (only for mobile) */}
         <Box display={{ base: "block", md: "none" }}>
           <SortBy
-            tabsList={tabsList}
             handleSortChange={handleSortChange}
             handleItem={handleItem}
           />

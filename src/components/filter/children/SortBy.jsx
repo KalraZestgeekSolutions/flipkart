@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
 import { Text, Flex, Box, Button } from "@chakra-ui/react";
 import { useState } from "react";
-
-const SortBy = ({ handleSortChange, tabsList }) => {
+import { tabs } from "@/constants/TabConstants";
+const SortBy = ({ handleSortChange }) => {
   const [activeTab, setActiveTab] = useState(0);
-
   const handleTabChange = (index, tab) => {
     setActiveTab(index);
     console.log(tab.value);
@@ -34,18 +33,20 @@ const SortBy = ({ handleSortChange, tabsList }) => {
           justifyContent="start"
           alignItems="start"
         >
-          {tabsList?.map((tab, index) => (
-            <Button
-              variant="none"
-              rounded={false}
-              borderBottom="2px solid"
-              borderColor={activeTab === index ? "blue.500" : "gray.200"}
-              key={tab.value}
-              onClick={() => handleTabChange(index, tab)}
-            >
-              {tab?.label}
-            </Button>
-          ))}
+          {tabs.map((tab, index) => {
+            return (
+              <Button
+                variant="none"
+                rounded={false}
+                borderBottom="2px solid"
+                borderColor={activeTab === index ? "blue.500" : "gray.200"}
+                key={tab.value}
+                onClick={() => handleTabChange(index, tab)}
+              >
+                {tab.label}
+              </Button>
+            );
+          })}
         </Flex>
       </Flex>
     </Box>
