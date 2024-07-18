@@ -1,14 +1,18 @@
 /* eslint-disable react/prop-types */
 import { Button, Flex, Text } from "@chakra-ui/react";
 import { useContext } from "react";
-import { CartContext } from "../../../context/CartContext";
+import { CartContext } from "@/context/CartContext";
 import RemovePopUp from "./RemovePopUp";
 const UpdateQuantity = ({ item, index, itemId }) => {
   const { handleIncrementQuantity, handleDecrementQuantity } =
     useContext(CartContext);
   return (
-    <Flex w="100%" gap="8">
-      <Flex gap="3" justifyContent="center" alignItems="center">
+    <Flex w="100%" gap={{ base: 2, sm: 5, md: 3 }} pl="3 ">
+      <Flex
+        gap={{ base: 4, md: 5 }}
+        justifyContent="center"
+        alignItems="center"
+      >
         <Button
           variant="outline"
           onClick={() => handleDecrementQuantity(index)}
@@ -21,7 +25,7 @@ const UpdateQuantity = ({ item, index, itemId }) => {
         >
           -
         </Button>
-        <Text>{item.quantity}</Text>
+        <Text fontSize="20">{item.quantity}</Text>
         <Button
           variant="outline"
           onClick={() => handleIncrementQuantity(index)}

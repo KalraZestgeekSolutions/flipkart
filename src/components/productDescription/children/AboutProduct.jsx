@@ -20,7 +20,7 @@ const AboutProduct = ({
         justifyContent="center"
         alignItems="center"
         bg="gray.100"
-        px="6"
+        px="4"
       >
         <Card
           position="relative"
@@ -32,20 +32,15 @@ const AboutProduct = ({
           alignItems="start"
           justifyContent="center"
           pb="44"
-          gap={{ base: 14, md: 0 }}
+          gap={{ base: 14, md: 4, lg: 3 }}
+          px="4"
         >
           <Images
             handleImageIndex={handleImageIndex}
             product={product}
             imageIndex={imageIndex}
           />
-          <Stack
-            mr={{ base: 0, md: 4 }}
-            mt="4"
-            bottom="4"
-            w="auto"
-            minH="100vh"
-          >
+          <Stack mt="4" bottom="4" w="auto" minH="100vh">
             <CardBody
               display="flex"
               gap="2"

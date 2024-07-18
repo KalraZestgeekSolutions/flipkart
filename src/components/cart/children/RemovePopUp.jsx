@@ -11,13 +11,17 @@ import {
   useDisclosure,
 } from "@chakra-ui/react";
 import React, { useContext } from "react";
-import { CartContext } from "../../../context/CartContext";
+import { CartContext } from "@/context/CartContext";
 
 const RemovePopUp = ({ itemId }) => {
   const { handleRemoveItem } = useContext(CartContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const finalRef = React.useRef(null);
 
+  const handleRemoveAndCloseModal = () => {
+    handleRemoveItem(itemId);
+    onClose();
+  };
   return (
     <>
       <Button variant="none" fontSize="20" onClick={onOpen}>
@@ -51,7 +55,7 @@ const RemovePopUp = ({ itemId }) => {
               bg="#2370f4"
               color="white"
               mr={3}
-              onClick={() => handleRemoveItem(itemId)}
+              onClick={handleRemoveAndCloseModal}
               px="6"
               py="8"
               w="100%"

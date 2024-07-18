@@ -43,7 +43,7 @@ const ProductList = ({ productList, loading }) => {
                   padding="6"
                   boxShadow="lg"
                   bg="white"
-                  minW={{ base: "280", sm: 250, md: 250 }}
+                  minW={{ base: 370, sm: 250, md: 250 }}
                   minH="400px"
                   display="flex"
                   flexDirection="column"
@@ -100,7 +100,7 @@ const ProductList = ({ productList, loading }) => {
                       alt={product.productTitle}
                       borderRadius="lg"
                       my="5"
-                      maxW={["50%"]}
+                      maxW={["65%"]}
                     />
                   </Box>
                   <Stack

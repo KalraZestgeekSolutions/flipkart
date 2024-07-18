@@ -1,6 +1,6 @@
 import { Box, Divider, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
 import { useContext } from "react";
-import { CartContext } from "../../../context/CartContext";
+import { CartContext } from "@/context/CartContext";
 
 const PriceDetails = () => {
   const {

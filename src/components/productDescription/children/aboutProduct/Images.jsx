@@ -5,7 +5,7 @@ import CartButtons from "./CartButtons";
 const Images = ({ product, imageIndex, handleImageIndex }) => {
   return (
     <Box
-      w={{ base: "100%", md: 500 }}
+      w={{ base: "100%", md: 500, lg: 700 }}
       minH="70vh"
       display="flex"
       justifyContent=""
@@ -26,7 +26,7 @@ const Images = ({ product, imageIndex, handleImageIndex }) => {
         flexDirection={{ base: "column", md: "row" }}
       >
         <Box
-          w={{ base: "100%", md: 24 }}
+          w={{ base: "100%", md: 32, lg: 32 }}
           minH="100%"
           display="flex"
           flexDirection={{ base: "row", md: "column " }}
@@ -35,8 +35,8 @@ const Images = ({ product, imageIndex, handleImageIndex }) => {
             return (
               <Box
                 key={index}
-                w={{ base: 44, md: 24 }}
-                h={{ base: 32, md: 24 }}
+                w={{ base: 44, md: 32, lg: 32 }}
+                h={{ base: 32, md: 32, lg: 32 }}
                 border="2px solid"
                 borderColor={`${
                   imageIndex === index ? "blue.500" : "gray.200"
@@ -55,7 +55,7 @@ const Images = ({ product, imageIndex, handleImageIndex }) => {
 
         <Box
           minH={400}
-          minW={{ base: "100%", md: 300 }}
+          minW={{ base: "100%", md: 330, lg: 400 }}
           display="flex"
           justifyContent="center"
           alignItems="center"
@@ -68,7 +68,7 @@ const Images = ({ product, imageIndex, handleImageIndex }) => {
             src={product.DescriptiveImages[imageIndex]}
             alt={product.productTitle}
             borderRadius="lg"
-            p={["2%", "1%", "12%", "12%"]}
+            p={["2%", "1%", "12%", "2%"]}
             maxH="34vh"
           />
         </Box>

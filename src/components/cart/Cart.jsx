@@ -2,7 +2,7 @@ import { Box, Button, Divider, Flex, Image, Text } from "@chakra-ui/react";
 import PriceDetails from "./children/PriceDetails";
 import UpdateQuantity from "./children/UpdateQuantity";
 import { useContext } from "react";
-import { CartContext } from "../../context/CartContext";
+import { CartContext } from "@/context/CartContext";
 import { useNavigate } from "react-router-dom";
 const Cart = () => {
   const navigate = useNavigate();
@@ -27,84 +27,127 @@ const Cart = () => {
         bg="white"
         alignItems="center"
         rounded="md"
+        // minH={{ base: "50vh", md: 0 }}
+        maxH={{ base: "55vh", lg: "87vh" }}
+        maxW={{ base: "auto", md: "60vw", lg: "90%" }}
+        overflow="hidden"
         border="3px soild"
         borderColor="black"
+        position="relative"
       >
-        {productList.length <= 0 ? (
-          <Flex
-            minW="65vw"
-            p="5"
-            justifyContent="center"
-            alignItems="center"
-            direction="column"
-            gap="5"
-            minH="44vh"
-          >
-            <Text fontSize={24}>Your cart is empty</Text>
-            <Button
-              px="8"
-              py="8"
-              bg="orange"
-              color="white"
-              onClick={handleGoToHome}
-              _hover={{}}
-              rounded={false}
-              fontWeight={900}
-            >
-              SHOP NOW
-            </Button>
-          </Flex>
-        ) : (
-          productList.map((item, index) => (
-            <Box
-              w="100%"
-              display="flex"
+        <Box
+          overflow="scroll"
+          sx={{
+            "::-webkit-scrollbar": {
+              display: "none",
+            },
+          }}
+          pb="28"
+        >
+          {productList.length <= 0 ? (
+            <Flex
+              minW="65vw"
+              p="5"
               justifyContent="center"
               alignItems="center"
-              flexDirection="column"
-              gap="4"
-              key={index}
-              p="2"
+              direction="column"
+              gap="5"
             >
-              <Flex>
-                <Box w="40" p="4">
-                  <Image cursor="pointer" src={item?.HeadImage} />
-                </Box>
-                <Flex direction="column" flex="1" gap="5">
-                  <Text fontWeight={500} noOfLines={1} fontSize="20">
-                    {item?.productTitle}
-                  </Text>
-                  <Flex gap="2" justifyContent="start" alignItems="center">
-                    <Text
-                      fontSize={{ base: "sm", md: "lg" }}
-                      color="gray.500"
-                      as="del"
-                    >
-                      &#8377;{item?.price}
+              <Text fontSize={24}>Your cart is empty</Text>
+              <Button
+                px="8"
+                py="8"
+                bg="orange"
+                color="white"
+                onClick={handleGoToHome}
+                _hover={{}}
+                rounded={false}
+                fontWeight={900}
+              >
+                SHOP NOW
+              </Button>
+            </Flex>
+          ) : (
+            productList.map((item, index) => (
+              <Box
+                w="100%"
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                flexDirection="column"
+                gap="2"
+                key={index}
+                p="2"
+              >
+                <Flex gap="3">
+                  <Box w="40" p="2" my="4">
+                    <Image
+                      cursor="pointer"
+                      w="100%"
+                      h="100%"
+                      src={item?.HeadImage}
+                    />
+                  </Box>
+                  <Flex direction="column" flex="1" gap="5">
+                    <Text fontWeight={500} noOfLines={1} fontSize="20">
+                      {item?.productTitle}
                     </Text>
-                    <Text fontSize={{ base: "sm", md: "xl" }} as="b">
-                      &#8377;{item?.discountedPrice}
-                    </Text>
-                    <Text
-                      fontWeight={{ base: 400, md: 500 }}
-                      fontSize={{ base: "sm", md: "lg" }}
-                      color="#388e3c"
-                    >
-                      {item?.discountPercentage}% Off
-                    </Text>
+                    <Flex gap="2" justifyContent="start" alignItems="center">
+                      <Text
+                        fontSize={{ base: "sm", md: "lg" }}
+                        color="gray.500"
+                        as="del"
+                      >
+                        &#8377;{item?.price}
+                      </Text>
+                      <Text fontSize={{ base: "sm", md: "xl" }} as="b">
+                        &#8377;{item?.discountedPrice}
+                      </Text>
+                      <Text
+                        fontWeight={{ base: 400, md: 500 }}
+                        fontSize={{ base: "sm", md: "lg" }}
+                        color="#388e3c"
+                      >
+                        {item?.discountPercentage}% Off
+                      </Text>
+                    </Flex>
                   </Flex>
                 </Flex>
-              </Flex>
-              {/* update Quantity */}
-              <UpdateQuantity item={item} itemId={item._id} index={index} />
-              <Divider my="5" />
-            </Box>
-          ))
-        )}
+                {/* update Quantity */}
+                <UpdateQuantity item={item} itemId={item._id} index={index} />
+                <Divider my="5" />
+              </Box>
+            ))
+          )}
+        </Box>
+
+        <Flex
+          position="absolute"
+          bottom="0"
+          h="28"
+          bg="white"
+          w="100%"
+          justifyContent="end"
+          p="3"
+          boxShadow="dark-lg"
+        >
+          <Button
+            bg="tomato"
+            _hover={{}}
+            px="28"
+            py="10"
+            color="white"
+            rounded="sm"
+            fontWeight={700}
+            fontSize="24"
+          >
+            Place Order
+          </Button>
+        </Flex>
       </Flex>
 
       {/* Price Details */}
-      <Flex w={{ base: "100%", md: "50%" }}>
+      <Flex w={{ base: "100%", md: "40%" }}>
         <PriceDetails />
       </Flex>
     </Flex>

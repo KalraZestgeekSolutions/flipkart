@@ -3,7 +3,7 @@ import { Box, useDisclosure } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Skeleton from "../skeleton/Skeleton";
+import Skeleton from "@/components/skeleton/Skeleton";
 import AboutProduct from "./children/AboutProduct";
 
 const CardDescription = () => {
