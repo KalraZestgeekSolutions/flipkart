@@ -13,13 +13,12 @@ import {
   MaxPrice,
 } from "../../constants/FilterConstants";
 
-const Filters = ({ onClose }) => {
+export const Filters = ({ onClose }) => {
   const {
     allFilters,
     handleItem,
     handleClearAllFilters,
     handleSortChange,
-    handlePriceChange,
     handleCloseFilter,
   } = useMainPage();
 
@@ -95,7 +94,6 @@ const Filters = ({ onClose }) => {
         MinPrice={MinPrice}
         MaxPrice={MaxPrice}
         handleItem={handleItem}
-        handlePriceChange={handlePriceChange}
       />
       {/* Sort by (only for mobile) */}
       <Box display={{ base: "block", md: "none" }}>
@@ -118,5 +116,3 @@ const Filters = ({ onClose }) => {
     </Box>
   );
 };
-
-export { Filters };

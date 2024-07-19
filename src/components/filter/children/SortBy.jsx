@@ -33,20 +33,18 @@ const SortBy = (props) => {
           justifyContent="start"
           alignItems="start"
         >
-          {tabs.map((tab, index) => {
-            return (
-              <Button
-                variant="none"
-                rounded={false}
-                borderBottom="2px solid"
-                borderColor={activeTab === index ? "blue.500" : "gray.200"}
-                key={tab.value}
-                onClick={() => handleTabChange(index, tab)}
-              >
-                {tab.label}
-              </Button>
-            );
-          })}
+          {tabs.map((tab, index) => (
+            <Button
+              variant="none"
+              rounded={false}
+              borderBottom="2px solid"
+              borderColor={activeTab === index ? "blue.500" : "gray.200"}
+              key={tab.value}
+              onClick={() => handleTabChange(index, tab)}
+            >
+              {tab.label}
+            </Button>
+          ))}
         </Flex>
       </Flex>
     </Box>

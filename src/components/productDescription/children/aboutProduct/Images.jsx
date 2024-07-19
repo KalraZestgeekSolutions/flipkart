@@ -3,7 +3,7 @@ import { Box, Image } from "@chakra-ui/react";
 import CartButtons from "./CartButtons";
 
 const Images = ({ product, imageIndex, handleImageIndex }) => {
-  const DescriptiveImages = product.DescriptiveImages;
+  const descriptiveImages = product.DescriptiveImages;
 
   return (
     <Box
@@ -33,7 +33,7 @@ const Images = ({ product, imageIndex, handleImageIndex }) => {
           display="flex"
           flexDirection={{ base: "row", md: "column " }}
         >
-          {DescriptiveImages.map((img, index) => (
+          {descriptiveImages.map((img, index) => (
             <Box
               key={img}
               w={{ base: 44, md: 32, lg: 32 }}

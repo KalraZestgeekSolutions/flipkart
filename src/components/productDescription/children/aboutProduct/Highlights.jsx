@@ -2,7 +2,7 @@
 import { Box, Flex, ListItem, Text, UnorderedList } from "@chakra-ui/react";
 
 const Highlights = ({ product }) => {
-  const ProductDetails = product.productDetails;
+  const productDetails = product.productDetails;
 
   return (
     <Flex gap="3" alignItems="start" justifyContent="start" w="100%">
@@ -22,7 +22,7 @@ const Highlights = ({ product }) => {
         mt="2px"
       >
         <UnorderedList color="gray.500">
-          {ProductDetails.map((details) => {
+          {productDetails.map((details) => {
             return (
               <ListItem key={details[0]}>
                 <Text color="black">{details}</Text>

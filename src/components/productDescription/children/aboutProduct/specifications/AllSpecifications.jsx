@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Box, Button, Collapse, Divider } from "@chakra-ui/react";
-import Specifications from "./SpecificationsFunctions";
+import { SpecificationsFilters } from "./SpecificationFilters";
 
 const AllSpecifications = ({ product, onToggle, isOpen }) => {
   return (
@@ -23,7 +23,7 @@ const AllSpecifications = ({ product, onToggle, isOpen }) => {
         Specifications
       </Box>
       <Box fontWeight={500}>
-        <Specifications product={product} section={"General"} />
+        <SpecificationsFilters product={product} section={"General"} />
         <Divider my="6" />
 
         <Box
@@ -50,34 +50,37 @@ const AllSpecifications = ({ product, onToggle, isOpen }) => {
           </Button>
         </Box>
         <Collapse in={isOpen} animateOpacity>
-          <Specifications
+          <SpecificationsFilters
             product={product}
             section={"Print"}
             keysToDisplay={["Max_Print_Resolution_(Mono)", "Print_Speed_Mono"]}
           />
           <Divider my="6" />
 
-          <Specifications
+          <SpecificationsFilters
             product={product}
             section={"Paper_Handling"}
             keysToDisplay={["Borderless_printing", "Media_size_supported"]}
           />
           <Divider my="6" />
-          <Specifications product={product} section={"Dimensions_And_Weight"} />
+          <SpecificationsFilters
+            product={product}
+            section={"Dimensions_And_Weight"}
+          />
           <Divider my="6" />
 
-          <Specifications product={product} section={"Connectivity"} />
+          <SpecificationsFilters product={product} section={"Connectivity"} />
 
           <Divider my="6" />
 
-          <Specifications
+          <SpecificationsFilters
             product={product}
             section={"Compatible_Inks/toners"}
             keysToDisplay={["Compatible_Black_cartridge"]}
           />
           <Divider my="6" />
 
-          <Specifications product={product} section={"Sales_Package"} />
+          <SpecificationsFilters product={product} section={"Sales_Package"} />
         </Collapse>
       </Box>
     </Box>

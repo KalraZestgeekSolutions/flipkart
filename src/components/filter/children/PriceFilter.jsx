@@ -10,20 +10,14 @@ import {
   RangeSliderThumb,
 } from "@chakra-ui/react";
 import { useState, useEffect, useCallback } from "react";
-
-const PriceFilter = ({
-  heading,
-  selectedItems,
-  handleItem,
-  MaxPrice,
-  MinPrice,
-  handlePriceChange,
-}) => {
+import { MinPrice, MaxPrice } from "@/constants/FilterConstants";
+import { handlePriceChange } from "@/hooks/useMainPage";
+const PriceFilter = ({ heading }) => {
   const [sliderValue, setSliderValue] = useState([0, 10000000]);
 
   useEffect(() => {
     handlePriceChange(sliderValue);
-  }, [sliderValue, handlePriceChange]);
+  }, [sliderValue]);
 
   const handleClear = () => {
     setSliderValue([0, 10000]);
