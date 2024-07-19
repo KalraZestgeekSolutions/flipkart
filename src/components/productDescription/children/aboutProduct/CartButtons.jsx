@@ -71,4 +71,4 @@ const CartButtons = ({ product }) => {
   );
 };
 
-export default CartButtons;
+export {CartButtons}

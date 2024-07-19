@@ -1,7 +1,9 @@
 /* eslint-disable react/prop-types */
 import { Box, Flex, ListItem, Text, UnorderedList } from "@chakra-ui/react";
-import React from "react";
+
 const Highlights = ({ product }) => {
+  const ProductDetails = product.productDetails;
+
   return (
     <Flex gap="3" alignItems="start" justifyContent="start" w="100%">
       <Box>
@@ -20,13 +22,11 @@ const Highlights = ({ product }) => {
         mt="2px"
       >
         <UnorderedList color="gray.500">
-          {product.productDetails.map((details) => {
+          {ProductDetails.map((details) => {
             return (
-              <React.Fragment key={details}>
-                <ListItem>
-                  <Text color="black">{details}</Text>
-                </ListItem>
-              </React.Fragment>
+              <ListItem key={details[0]}>
+                <Text color="black">{details}</Text>
+              </ListItem>
             );
           })}
         </UnorderedList>
@@ -35,4 +35,4 @@ const Highlights = ({ product }) => {
   );
 };
 
-export default Highlights;
+export { Highlights };

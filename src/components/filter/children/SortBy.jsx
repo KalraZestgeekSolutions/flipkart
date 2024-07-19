@@ -2,13 +2,13 @@
 import { Text, Flex, Box, Button } from "@chakra-ui/react";
 import { useState } from "react";
 import { tabs } from "@/constants/TabConstants";
-const SortBy = ({ handleSortChange }) => {
+
+const SortBy = (props) => {
+  const handleSortChange = props.handleSortChange;
   const [activeTab, setActiveTab] = useState(0);
   const handleTabChange = (index, tab) => {
     setActiveTab(index);
-    console.log(tab.value);
     handleSortChange(tab.value);
-    // handleItem(tab);
   };
 
   return (
@@ -53,4 +53,4 @@ const SortBy = ({ handleSortChange }) => {
   );
 };
 
-export default SortBy;
+export { SortBy };

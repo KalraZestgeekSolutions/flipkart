@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
-import { Box, Checkbox, Spacer, Text } from "@chakra-ui/react";
+import { Box, Checkbox, Icon, Spacer, Text } from "@chakra-ui/react";
 import { useState } from "react";
 
 const MappingSelectedFilters = ({
@@ -10,25 +10,18 @@ const MappingSelectedFilters = ({
   selectedItems,
 }) => {
   const [isOpen, setIsOpen] = useState(true);
+
   return (
     <Box borderBottom="2px" p="5" borderColor="whitesmoke">
       <Box display="flex" alignItems="Center" justifyContent="space-between">
         <Text as="b"> {heading}</Text>
-        {isOpen ? (
-          <ChevronUpIcon
-            boxSize="6"
-            color="gray"
-            cursor="pointer"
-            onClick={() => setIsOpen(!isOpen)}
-          />
-        ) : (
-          <ChevronDownIcon
-            boxSize="6"
-            color="gray"
-            cursor="pointer"
-            onClick={() => setIsOpen(!isOpen)}
-          />
-        )}
+        <Icon
+          boxSize="6"
+          color="gray"
+          cursor="pointer"
+          onClick={() => setIsOpen(!isOpen)}
+          as={`${isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}`}
+        />
       </Box>
       <Spacer mt="4" />
       {isOpen && (
@@ -48,4 +41,4 @@ const MappingSelectedFilters = ({
   );
 };
 
-export default MappingSelectedFilters;
+export { MappingSelectedFilters };

@@ -3,14 +3,12 @@ import PriceDetails from "./children/PriceDetails";
 import UpdateQuantity from "./children/UpdateQuantity";
 import { useContext } from "react";
 import { CartContext } from "@/context/CartContext";
-import { useNavigate } from "react-router-dom";
+import EmptyCart from "./children/EmptyCart";
+
 const Cart = () => {
-  const navigate = useNavigate();
   const { cartData } = useContext(CartContext);
   const productList = cartData.data;
-  const handleGoToHome = () => {
-    navigate("/");
-  };
+
   return (
     <Flex
       direction={{ base: "column", md: "row" }}
@@ -27,7 +25,6 @@ const Cart = () => {
         bg="white"
         alignItems="center"
         rounded="md"
-        // minH={{ base: "50vh", md: 0 }}
         maxH={{ base: "55vh", lg: "87vh" }}
         maxW={{ base: "auto", md: "60vw", lg: "90%" }}
         overflow="hidden"
@@ -45,30 +42,9 @@ const Cart = () => {
           pb="28"
         >
           {productList.length <= 0 ? (
-            <Flex
-              minW="65vw"
-              p="5"
-              justifyContent="center"
-              alignItems="center"
-              direction="column"
-              gap="5"
-            >
-              <Text fontSize={24}>Your cart is empty</Text>
-              <Button
-                px="8"
-                py="8"
-                bg="orange"
-                color="white"
-                onClick={handleGoToHome}
-                _hover={{}}
-                rounded={false}
-                fontWeight={900}
-              >
-                SHOP NOW
-              </Button>
-            </Flex>
+            <EmptyCart />
           ) : (
-            productList.map((item, index) => (
+            productList.map((item) => (
               <Box
                 w="100%"
                 display="flex"
@@ -76,10 +52,10 @@ const Cart = () => {
                 alignItems="center"
                 flexDirection="column"
                 gap="2"
-                key={index}
+                key={item?.productTitle}
                 p="2"
               >
-                <Flex gap="3">
+                <Flex gap="3" w="100%">
                   <Box w="40" p="2" my="4">
                     <Image
                       cursor="pointer"
@@ -114,7 +90,11 @@ const Cart = () => {
                   </Flex>
                 </Flex>
                 {/* update Quantity */}
-                <UpdateQuantity item={item} itemId={item._id} index={index} />
+                <UpdateQuantity
+                  item={item}
+                  itemId={item._id}
+                  index={item?.productTitle}
+                />
                 <Divider my="5" />
               </Box>
             ))
@@ -154,4 +134,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export { Cart };

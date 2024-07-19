@@ -85,4 +85,4 @@ const RemovePopUp = ({ itemId }) => {
   );
 };
 
-export default RemovePopUp;
+export { RemovePopUp };

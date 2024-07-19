@@ -6,6 +6,7 @@ import { CartContext } from "@/context/CartContext";
 
 const Header = () => {
   const { cartData } = useContext(CartContext);
+
   return (
     <Box
       bg="white"
@@ -44,4 +45,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export { Header };

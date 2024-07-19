@@ -3,12 +3,13 @@ import {
   Accordion,
   AccordionIcon,
   AccordionItem,
-  Box,
   Drawer,
   DrawerBody,
   DrawerContent,
   Flex,
+  Text,
 } from "@chakra-ui/react";
+
 const FilterTemplate = ({ onOpen, onClose, btnRef, isOpen, children }) => {
   return (
     <>
@@ -20,7 +21,7 @@ const FilterTemplate = ({ onOpen, onClose, btnRef, isOpen, children }) => {
         mt="3"
         pl="5"
       >
-        <Box>Sort By:</Box>
+        <Text>Sort By:</Text>
         <Accordion allowToggle>
           <AccordionItem
             onClick={onOpen}
@@ -48,4 +49,4 @@ const FilterTemplate = ({ onOpen, onClose, btnRef, isOpen, children }) => {
   );
 };
 
-export default FilterTemplate;
+export { FilterTemplate };

@@ -13,7 +13,7 @@ const AboutProduct = ({
   handleImageIndex,
 }) => {
   return (
-    <>
+    
       <Box
         key={product.productTitle}
         display="flex"
@@ -58,8 +58,8 @@ const AboutProduct = ({
           </Stack>
         </Card>
       </Box>
-    </>
+   
   );
 };
 
-export default AboutProduct;
+export { AboutProduct };

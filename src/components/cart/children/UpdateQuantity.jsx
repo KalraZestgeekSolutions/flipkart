@@ -3,9 +3,11 @@ import { Button, Flex, Text } from "@chakra-ui/react";
 import { useContext } from "react";
 import { CartContext } from "@/context/CartContext";
 import RemovePopUp from "./RemovePopUp";
+
 const UpdateQuantity = ({ item, index, itemId }) => {
   const { handleIncrementQuantity, handleDecrementQuantity } =
     useContext(CartContext);
+
   return (
     <Flex w="100%" gap={{ base: 2, sm: 5, md: 3 }} pl="3 ">
       <Flex
@@ -47,4 +49,5 @@ const UpdateQuantity = ({ item, index, itemId }) => {
     </Flex>
   );
 };
-export default UpdateQuantity;
+
+export { UpdateQuantity };

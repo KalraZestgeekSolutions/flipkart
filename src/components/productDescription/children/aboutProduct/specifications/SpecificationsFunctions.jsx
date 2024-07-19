@@ -1,25 +1,27 @@
 /* eslint-disable react/prop-types */
 import { Grid, GridItem, Text, Box } from "@chakra-ui/react";
-import React from "react";
+import React, { useCallback } from "react";
 
-const Specifications = ({ product, section, keysToDisplay }) => {
+const SpecificationsFunctions = ({ product, section, keysToDisplay }) => {
   const sectionData = product.specifications[section];
 
-  const formatValue = (value) => {
-    if (typeof value === "boolean") {
-      return value ? "Yes" : "No";
-    }
-    if (Array.isArray(value)) {
-      return (
-        <Box display="flex" gap="2">
-          {value.slice(0, 4).map((item, index) => (
-            <Box key={index}>{item},</Box>
-          ))}
-        </Box>
-      );
-    }
-    return value;
-  };
+  const formatValue = useCallback(() => {
+    (value) => {
+      if (typeof value === "boolean") {
+        return value ? "Yes" : "No";
+      }
+      if (Array.isArray(value)) {
+        return (
+          <Box display="flex" gap="2">
+            {value.slice(0, 4).map((item) => (
+              <Box key={item}>{item},</Box>
+            ))}
+          </Box>
+        );
+      }
+      return value;
+    };
+  }, []);
 
   if (!sectionData) {
     return null;
@@ -52,4 +54,4 @@ const Specifications = ({ product, section, keysToDisplay }) => {
   );
 };
 
-export default Specifications;
+export { SpecificationsFunctions };

@@ -9,7 +9,7 @@ import {
   RangeSliderFilledTrack,
   RangeSliderThumb,
 } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 const PriceFilter = ({
   heading,
@@ -19,38 +19,39 @@ const PriceFilter = ({
   MinPrice,
   handlePriceChange,
 }) => {
-  const [sliderValue, setSliderValue] = useState([0, 10000]); // Initial state for price range
+  const [sliderValue, setSliderValue] = useState([0, 10000000]);
 
   useEffect(() => {
-    // Trigger handlePriceChange on component mount or when sliderValue changes
     handlePriceChange(sliderValue);
   }, [sliderValue, handlePriceChange]);
 
   const handleClear = () => {
-    // Reset slider value and trigger handlePriceChange
     setSliderValue([0, 10000]);
   };
 
-  const handleSliderChange = (val) => {
-    // Update slider value and trigger handlePriceChange if valid range
-    setSliderValue(val);
-  };
+  const handleSliderChange = useCallback(() => {
+    (val) => {
+      setSliderValue(val);
+    };
+  }, []);
 
-  const handleMinSelectChange = (e) => {
-    const value = parseInt(e.target.value);
-    // Ensure valid range and update slider value
-    if (value <= sliderValue[1]) {
-      setSliderValue([value, sliderValue[1]]);
-    }
-  };
+  const handleMinSelectChange = useCallback(() => {
+    (e) => {
+      const value = parseInt(e.target.value);
+      if (value <= sliderValue[1]) {
+        setSliderValue([value, sliderValue[1]]);
+      }
+    };
+  }, [sliderValue]);
 
-  const handleMaxSelectChange = (e) => {
-    const value = parseInt(e.target.value);
-    // Ensure valid range and update slider value
-    if (value >= sliderValue[0]) {
-      setSliderValue([sliderValue[0], value]);
-    }
-  };
+  const handleMaxSelectChange = useCallback(() => {
+    (e) => {
+      const value = parseInt(e.target.value);
+      if (value >= sliderValue[0]) {
+        setSliderValue([sliderValue[0], value]);
+      }
+    };
+  }, [sliderValue]);
 
   return (
     <Box borderBottom="2px" p="2" borderColor="whitesmoke">
@@ -111,4 +112,4 @@ const PriceFilter = ({
   );
 };
 
-export default PriceFilter;
+export { PriceFilter };

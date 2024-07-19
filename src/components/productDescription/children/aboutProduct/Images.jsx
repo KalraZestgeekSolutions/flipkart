@@ -3,6 +3,8 @@ import { Box, Image } from "@chakra-ui/react";
 import CartButtons from "./CartButtons";
 
 const Images = ({ product, imageIndex, handleImageIndex }) => {
+  const DescriptiveImages = product.DescriptiveImages;
+
   return (
     <Box
       w={{ base: "100%", md: 500, lg: 700 }}
@@ -31,26 +33,22 @@ const Images = ({ product, imageIndex, handleImageIndex }) => {
           display="flex"
           flexDirection={{ base: "row", md: "column " }}
         >
-          {product.DescriptiveImages.map((img, index) => {
-            return (
-              <Box
-                key={index}
-                w={{ base: 44, md: 32, lg: 32 }}
-                h={{ base: 32, md: 32, lg: 32 }}
-                border="2px solid"
-                borderColor={`${
-                  imageIndex === index ? "blue.500" : "gray.200"
-                }`}
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                cursor="pointer"
-                onClick={() => handleImageIndex(index)}
-              >
-                <Image src={img} p={{ base: 4, sm: 8, md: 4 }} />
-              </Box>
-            );
-          })}
+          {DescriptiveImages.map((img, index) => (
+            <Box
+              key={img}
+              w={{ base: 44, md: 32, lg: 32 }}
+              h={{ base: 32, md: 32, lg: 32 }}
+              border="2px solid"
+              borderColor={`${imageIndex === index ? "blue.500" : "gray.200"}`}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              cursor="pointer"
+              onClick={() => handleImageIndex(index)}
+            >
+              <Image src={img} p={{ base: 4, sm: 8, md: 4 }} />
+            </Box>
+          ))}
         </Box>
 
         <Box
@@ -80,4 +78,4 @@ const Images = ({ product, imageIndex, handleImageIndex }) => {
   );
 };
 
-export default Images;
+export { Images };
