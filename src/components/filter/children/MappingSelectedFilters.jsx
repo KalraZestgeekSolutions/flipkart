@@ -20,7 +20,7 @@ const MappingSelectedFilters = ({
           color="gray"
           cursor="pointer"
           onClick={() => setIsOpen(!isOpen)}
-          as={`${isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}`}
+          as={isOpen ? ChevronUpIcon : ChevronDownIcon}
         />
       </Box>
       <Spacer mt="4" />
@@ -29,8 +29,8 @@ const MappingSelectedFilters = ({
           {list.map((item) => (
             <Checkbox
               key={item.value}
-              isChecked={selectedItems.some((ele) => ele.value === item.value)}
-              onChange={() => handleItem(item)}
+              isChecked={selectedItems.includes(item.value)}
+              onChange={() => handleItem(item.value)}
             >
               {item.label}
             </Checkbox>

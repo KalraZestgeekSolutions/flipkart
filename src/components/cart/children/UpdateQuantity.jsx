@@ -2,9 +2,9 @@
 import { Button, Flex, Text } from "@chakra-ui/react";
 import { useContext } from "react";
 import { CartContext } from "@/context/CartContext";
-import RemovePopUp from "./RemovePopUp";
+import { RemovePopUp } from "./RemovePopUp";
 
-const UpdateQuantity = ({ item, index, itemId }) => {
+const UpdateQuantity = ({ item, itemId, index }) => {
   const { handleIncrementQuantity, handleDecrementQuantity } =
     useContext(CartContext);
 
@@ -18,8 +18,8 @@ const UpdateQuantity = ({ item, index, itemId }) => {
         <Button
           variant="outline"
           onClick={() => handleDecrementQuantity(index)}
-          cursor={`${item.quantity === 1 ? " default" : "pointer"} `}
-          color={`${item.quantity === 1 ? "gray.400" : "black"} `}
+          cursor={`${item?.quantity === 1 ? "default" : "pointer"} `}
+          color={`${item?.quantity === 1 ? "gray.400" : "black"} `}
           rounded="100%"
           fontSize="24"
           p="3"
@@ -27,7 +27,7 @@ const UpdateQuantity = ({ item, index, itemId }) => {
         >
           -
         </Button>
-        <Text fontSize="20">{item.quantity}</Text>
+        <Text fontSize="20">{item?.quantity}</Text>
         <Button
           variant="outline"
           onClick={() => handleIncrementQuantity(index)}

@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Box, Image } from "@chakra-ui/react";
-import CartButtons from "./CartButtons";
+import { CartButtons } from "./CartButtons";
 
 const Images = ({ product, imageIndex, handleImageIndex }) => {
   const descriptiveImages = product.DescriptiveImages;
@@ -35,7 +35,7 @@ const Images = ({ product, imageIndex, handleImageIndex }) => {
         >
           {descriptiveImages.map((img, index) => (
             <Box
-              key={img}
+              key={index}
               w={{ base: 44, md: 32, lg: 32 }}
               h={{ base: 32, md: 32, lg: 32 }}
               border="2px solid"

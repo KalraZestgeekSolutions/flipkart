@@ -3,7 +3,7 @@ import { Grid, GridItem, Text, Box } from "@chakra-ui/react";
 import React, { useCallback, useMemo } from "react";
 
 export const SpecificationsFilters = ({ product, section, keysToDisplay }) => {
-  const sectionData = product.specifications[section];
+  const sectionData = product?.specifications?.[section];
 
   const formatValue = useCallback((value) => {
     if (typeof value === "boolean") {
@@ -11,9 +11,9 @@ export const SpecificationsFilters = ({ product, section, keysToDisplay }) => {
     }
     if (Array.isArray(value)) {
       return (
-        <Box display="flex" gap="2">
-          {value.slice(0, 4).map((item) => (
-            <Box key={item}>{item},</Box>
+        <Box display="flex" gap="2" flexWrap="wrap">
+          {value.slice(0, 4).map((item, index) => (
+            <Box key={index}>{item},</Box>
           ))}
         </Box>
       );
@@ -23,6 +23,7 @@ export const SpecificationsFilters = ({ product, section, keysToDisplay }) => {
 
   // Determine which keys to display
   const entriesToDisplay = useMemo(() => {
+    if (!sectionData) return [];
     if (keysToDisplay && Array.isArray(keysToDisplay)) {
       return Object.entries(sectionData).filter(([key]) =>
         keysToDisplay.includes(key)

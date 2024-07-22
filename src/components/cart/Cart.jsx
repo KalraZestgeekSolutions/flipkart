@@ -1,9 +1,9 @@
 import { Box, Button, Divider, Flex, Image, Text } from "@chakra-ui/react";
-import PriceDetails from "./children/PriceDetails";
-import UpdateQuantity from "./children/UpdateQuantity";
+import { PriceDetails } from "./children/PriceDetails";
+import { UpdateQuantity } from "./children/UpdateQuantity";
 import { useContext } from "react";
 import { CartContext } from "@/context/CartContext";
-import EmptyCart from "./children/EmptyCart";
+import { EmptyCart } from "./children/EmptyCart";
 
 const Cart = () => {
   const { cartData } = useContext(CartContext);
@@ -44,7 +44,7 @@ const Cart = () => {
           {productList.length <= 0 ? (
             <EmptyCart />
           ) : (
-            productList.map((item) => (
+            productList.map((item, index) => (
               <Box
                 w="100%"
                 display="flex"
@@ -52,7 +52,7 @@ const Cart = () => {
                 alignItems="center"
                 flexDirection="column"
                 gap="2"
-                key={item?.productTitle}
+                key={item?._id}
                 p="2"
               >
                 <Flex gap="3" w="100%">
@@ -90,11 +90,7 @@ const Cart = () => {
                   </Flex>
                 </Flex>
                 {/* update Quantity */}
-                <UpdateQuantity
-                  item={item}
-                  itemId={item._id}
-                  index={item?.productTitle}
-                />
+                <UpdateQuantity item={item} itemId={item?._id} index={index} />
                 <Divider my="5" />
               </Box>
             ))
@@ -127,7 +123,7 @@ const Cart = () => {
       </Flex>
 
       {/* Price Details */}
-      <Flex w={{ base: "100%", md: "40%" }}>
+      <Flex w={{ base: "100%", md: "40%", xl: "50%" }}>
         <PriceDetails />
       </Flex>
     </Flex>

@@ -1,27 +1,19 @@
 /* eslint-disable react/prop-types */
-/* eslint-disable react/jsx-key */
 import { Box, Text, Heading, Grid, Flex } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
-import MappingSelectedFilters from "./children/MappingSelectedFilters";
-import PriceFilter from "./children/PriceFilter";
-import SortBy from "./children/SortBy";
-import useMainPage from "../../hooks/useMainPage";
-import {
-  ratingList,
-  brandList,
-  MinPrice,
-  MaxPrice,
-} from "../../constants/FilterConstants";
+import { MappingSelectedFilters } from "./children/MappingSelectedFilters";
+import { SortBy } from "./children/SortBy";
+import { ratingList, brandList } from "@/constants/FilterConstants";
+import { PriceFilter } from "./children/PriceFilter";
 
-export const Filters = ({ onClose }) => {
-  const {
-    allFilters,
-    handleItem,
-    handleClearAllFilters,
-    handleSortChange,
-    handleCloseFilter,
-  } = useMainPage();
-
+export const Filters = ({
+  onClose,
+  allFilters,
+  handleClearAllFilters,
+  handleSortChange,
+  handleFilterChange,
+  handlePriceChange,
+}) => {
   return (
     <Box
       border="2px"
@@ -64,11 +56,11 @@ export const Filters = ({ onClose }) => {
           CLEAR ALL
         </Text>
       </Flex>
+
       <Grid templateColumns="repeat(2,1fr)" gap="4" p="2">
-        {/* Display selected filters */}
-        {allFilters.map((item) => (
+        {allFilters.brand.map((item) => (
           <Box
-            key={item.value}
+            key={item}
             bg="lightgray"
             fontSize="sm"
             px="2"
@@ -78,40 +70,52 @@ export const Filters = ({ onClose }) => {
             alignItems="center"
             justifyContent="space-between"
           >
-            <Text>{item.label}</Text>
+            <Text>{item}</Text>
             <CloseIcon
               boxSize="3"
               cursor="pointer"
-              onClick={() => handleCloseFilter(item)}
+              onClick={() => handleFilterChange("brand", item)}
+            />
+          </Box>
+        ))}
+        {allFilters.rating.map((item) => (
+          <Box
+            key={item}
+            bg="lightgray"
+            fontSize="sm"
+            px="2"
+            py="1"
+            borderRadius="md"
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+          >
+            <Text>{item}</Text>
+            <CloseIcon
+              boxSize="3"
+              cursor="pointer"
+              onClick={() => handleFilterChange("rating", item)}
             />
           </Box>
         ))}
       </Grid>
-      {/* Price range filter */}
-      <PriceFilter
-        selectedItems={allFilters}
-        heading="Filter by Price"
-        MinPrice={MinPrice}
-        MaxPrice={MaxPrice}
-        handleItem={handleItem}
-      />
-      {/* Sort by (only for mobile) */}
+
+      <PriceFilter handlePriceChange={handlePriceChange} />
+
       <Box display={{ base: "block", md: "none" }}>
-        <SortBy handleSortChange={handleSortChange} handleItem={handleItem} />
+        <SortBy handleSortChange={handleSortChange} />
       </Box>
-      {/* Brand filter */}
       <MappingSelectedFilters
         list={brandList}
         heading="BRAND"
-        selectedItems={allFilters}
-        handleItem={handleItem}
+        selectedItems={allFilters.brand}
+        handleItem={(item) => handleFilterChange("brand", item)}
       />
-      {/* Rating filter */}
       <MappingSelectedFilters
         list={ratingList}
         heading="CUSTOMER RATING"
-        selectedItems={allFilters}
-        handleItem={handleItem}
+        selectedItems={allFilters.rating}
+        handleItem={(item) => handleFilterChange("rating", item)}
       />
     </Box>
   );

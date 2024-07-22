@@ -11,41 +11,43 @@ import {
 } from "@chakra-ui/react";
 import { useState, useEffect, useCallback } from "react";
 import { MinPrice, MaxPrice } from "@/constants/FilterConstants";
-import { handlePriceChange } from "@/hooks/useMainPage";
-const PriceFilter = ({ heading }) => {
-  const [sliderValue, setSliderValue] = useState([0, 10000000]);
+import useFilters from "@/hooks/useFilters";
+
+const PriceFilter = ({ heading, handlePriceChange }) => {
+  const [sliderValue, setSliderValue] = useState([0, 100000]);
+  // const { handlePriceChange } = useFilters();
 
   useEffect(() => {
     handlePriceChange(sliderValue);
-  }, [sliderValue]);
+  }, [sliderValue, handlePriceChange]);
 
   const handleClear = () => {
-    setSliderValue([0, 10000]);
+    setSliderValue([0, 100000]);
   };
 
-  const handleSliderChange = useCallback(() => {
-    (val) => {
-      setSliderValue(val);
-    };
+  const handleSliderChange = useCallback((val) => {
+    setSliderValue(val);
   }, []);
 
-  const handleMinSelectChange = useCallback(() => {
+  const handleMinSelectChange = useCallback(
     (e) => {
       const value = parseInt(e.target.value);
       if (value <= sliderValue[1]) {
         setSliderValue([value, sliderValue[1]]);
       }
-    };
-  }, [sliderValue]);
+    },
+    [sliderValue]
+  );
 
-  const handleMaxSelectChange = useCallback(() => {
+  const handleMaxSelectChange = useCallback(
     (e) => {
       const value = parseInt(e.target.value);
       if (value >= sliderValue[0]) {
         setSliderValue([sliderValue[0], value]);
       }
-    };
-  }, [sliderValue]);
+    },
+    [sliderValue]
+  );
 
   return (
     <Box borderBottom="2px" p="2" borderColor="whitesmoke">
@@ -91,7 +93,7 @@ const PriceFilter = ({ heading }) => {
           aria-label={["min", "max"]}
           value={sliderValue}
           min={0}
-          max={10000}
+          max={1000000}
           step={100}
           onChange={handleSliderChange}
         >

@@ -1,7 +1,7 @@
 import { Box, GridItem, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 
 const MainSkeleton = () => {
-  Array(15)
+  return Array(15)
     .fill("")
     .map((_, index) => (
       <GridItem

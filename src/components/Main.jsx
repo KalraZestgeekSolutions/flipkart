@@ -1,16 +1,30 @@
 import PropTypes from "prop-types";
 import { useRef } from "react";
 import { Box, Grid, GridItem, useDisclosure } from "@chakra-ui/react";
-// import Filters from "./filter/Filters";
-import ProductList from "./pages/ProductList";
-import SortBy from "./filter/children/SortBy";
-import FilterTemplate from "./templates/FilterTemplate";
-import useMainPage from "../hooks/useMainPage";
+import { Filters } from "./filter/Filters";
+import { ProductList } from "./pages/ProductList";
+import { SortBy } from "./filter/children/SortBy";
+import { FilterTemplate } from "./templates/FilterTemplate";
+import useFilters from "../hooks/useFilters";
 
 const Main = () => {
-  const { productList, loading, handleSortChange } = useMainPage();
+  const {
+    productList,
+    loading,
+    allFilters,
+    handleClearAllFilters,
+    handleSortChange,
+    handleFilterChange,
+    handlePriceChange,
+  } = useFilters();
+
+  console.log(allFilters, "allfiltersss");
+  console.log(productList, "Mainnnnnn");
+  console.log(loading);
+
   const btnRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Grid
       display="flex"
@@ -30,7 +44,7 @@ const Main = () => {
           btnRef={btnRef}
           isOpen={isOpen}
         >
-          {/* <Filters onClose={onClose} /> */}
+          <Filters onClose={onClose} />
         </FilterTemplate>
       </GridItem>
       <Box
@@ -47,7 +61,13 @@ const Main = () => {
           colSpan={{ xl: 1 }}
           w={["100%", "100%", "55%"]}
         >
-          {/* <Filters /> */}
+          <Filters
+            allFilters={allFilters}
+            handleClearAllFilters={handleClearAllFilters}
+            handleSortChange={handleSortChange}
+            handleFilterChange={handleFilterChange}
+            handlePriceChange={handlePriceChange}
+          />
         </Box>
 
         <GridItem colSpan={{ base: 1 }} w={["100%", "100%", "70%", "120%"]}>

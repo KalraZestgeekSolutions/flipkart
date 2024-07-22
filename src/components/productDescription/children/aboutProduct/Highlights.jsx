@@ -24,7 +24,7 @@ const Highlights = ({ product }) => {
         <UnorderedList color="gray.500">
           {productDetails.map((details) => {
             return (
-              <ListItem key={details[0]}>
+              <ListItem key={details}>
                 <Text color="black">{details}</Text>
               </ListItem>
             );

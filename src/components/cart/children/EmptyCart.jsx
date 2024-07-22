@@ -1,7 +1,7 @@
 import { Button, Flex, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 
-const EmptyCart = () => {
+export const EmptyCart = () => {
   const navigate = useNavigate();
   const handleGoToHome = () => {
     navigate("/");
@@ -35,4 +35,4 @@ const EmptyCart = () => {
   );
 };
 
-export default EmptyCart;
+// export default EmptyCart;

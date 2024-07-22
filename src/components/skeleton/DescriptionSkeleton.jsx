@@ -1,45 +1,31 @@
 /* eslint-disable react/prop-types */
-import { Box, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
+import { Box, GridItem, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 
 const DescriptionSkeleton = () => {
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" px="4">
+    <GridItem display="flex" justifyContent="center" alignItems="center">
       <Box
-        boxShadow="xl"
+        padding="6"
+        boxShadow="lg"
+        mx="6"
         bg="white"
-        minW="100%"
-        minH="100vh"
+        w="100%"
+        h="100vh"
         display="flex"
-        flexDirection={{ base: "column", md: "row" }}
+        alignItems="start"
         justifyContent="center"
-        gap="16"
+        gap="4"
       >
-        <Box
-          display="flex"
-          justifyContent="center"
-          alignItems="start"
-          w="50vw"
-          h={500}
-        >
-          <SkeletonCircle rounded={false} size={100} />
-          <SkeletonCircle
-            rounded={false}
-            size={500}
-            border="2px solid"
-            borderColor="black"
-          />
-        </Box>
-
+        <SkeletonCircle size="28" p={["8%", "10%", "18%"]} rounded="md" />
         <SkeletonText
-          pr="10"
           mt="4"
           noOfLines={6}
-          spacing="4"
+          spacing="6"
           skeletonHeight="2"
-          w={["70%", "50%"]}
+          w="100%"
         />
       </Box>
-    </Box>
+    </GridItem>
   );
 };
 export { DescriptionSkeleton };

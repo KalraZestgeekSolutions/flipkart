@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Box, useDisclosure } from "@chakra-ui/react";
 import { DescriptionSkeleton } from "@/components/skeleton/DescriptionSkeleton";
-import AboutProduct from "./children/AboutProduct";
-import useDescriptionFetch from "../../hooks/useDescriptionFetch";
+import { AboutProduct } from "./children/AboutProduct";
+import { useDescriptionFetch } from "../../hooks/useDescriptionFetch";
 
 const CardDescription = () => {
   const { product, loading, imageIndex, handleImageIndex } =
