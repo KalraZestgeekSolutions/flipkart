@@ -9,48 +9,50 @@ import {
   RangeSliderFilledTrack,
   RangeSliderThumb,
 } from "@chakra-ui/react";
-import { useState, useEffect, useCallback } from "react";
-import { MinPrice, MaxPrice } from "@/constants/FilterConstants";
-import useFilters from "@/hooks/useFilters";
+import { useState, useEffect } from "react";
 
-const PriceFilter = ({ heading, handlePriceChange }) => {
-  const [sliderValue, setSliderValue] = useState([0, 100000]);
-  // const { handlePriceChange } = useFilters();
+const PriceFilter = ({ heading, handlePriceChange, handleClearAllFilters }) => {
+  const [sliderValue, setSliderValue] = useState([100, 80000]);
 
   useEffect(() => {
     handlePriceChange(sliderValue);
-  }, [sliderValue, handlePriceChange]);
+  }, [sliderValue, handlePriceChange, handleClearAllFilters]);
 
   const handleClear = () => {
-    setSliderValue([0, 100000]);
+    setSliderValue([100, 80000]);
   };
 
-  const handleSliderChange = useCallback((val) => {
+  const handleSliderChange = (val) => {
     setSliderValue(val);
-  }, []);
+  };
 
-  const handleMinSelectChange = useCallback(
-    (e) => {
-      const value = parseInt(e.target.value);
-      if (value <= sliderValue[1]) {
-        setSliderValue([value, sliderValue[1]]);
-      }
-    },
-    [sliderValue]
-  );
+  const handleMinSelectChange = (e) => {
+    const value = parseInt(e.target.value);
+    if (value <= sliderValue[1]) {
+      setSliderValue([value, sliderValue[1]]);
+    }
+  };
 
-  const handleMaxSelectChange = useCallback(
-    (e) => {
-      const value = parseInt(e.target.value);
-      if (value >= sliderValue[0]) {
-        setSliderValue([sliderValue[0], value]);
-      }
-    },
-    [sliderValue]
-  );
+  const handleMaxSelectChange = (e) => {
+    const value = parseInt(e.target.value);
+    if (value >= sliderValue[0]) {
+      setSliderValue([sliderValue[0], value]);
+    }
+  };
+
+  const generatePriceOptions = (min, max, step) => {
+    const options = [];
+    for (let i = min; i <= max; i += step) {
+      options.push({ value: i, label: i });
+    }
+    return options;
+  };
+
+  const minPriceOptions = generatePriceOptions(100, sliderValue[1], 100);
+  const maxPriceOptions = generatePriceOptions(sliderValue[0], 100000, 100);
 
   return (
-    <Box borderBottom="2px" p="2" borderColor="whitesmoke">
+    <Box borderBottom="2px" borderColor="whitesmoke">
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Text as="b">{heading}</Text>
         <Text
@@ -64,10 +66,15 @@ const PriceFilter = ({ heading, handlePriceChange }) => {
       </Box>
       <Spacer mt="4" />
 
-      <Box display="flex" justifyContent="space-between" alignItems="center">
+      <Box
+        // p="4"
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+      >
         <Box>
           <Select value={sliderValue[0]} onChange={handleMinSelectChange}>
-            {MinPrice.map((price) => (
+            {minPriceOptions.map((price) => (
               <option key={price.value} value={price.value}>
                 ₹{price.label}
               </option>
@@ -79,7 +86,7 @@ const PriceFilter = ({ heading, handlePriceChange }) => {
         </Box>
         <Box>
           <Select value={sliderValue[1]} onChange={handleMaxSelectChange}>
-            {MaxPrice.map((price) => (
+            {maxPriceOptions.map((price) => (
               <option key={price.value} value={price.value}>
                 ₹{price.label}
               </option>
@@ -90,10 +97,9 @@ const PriceFilter = ({ heading, handlePriceChange }) => {
 
       <Box mt="4">
         <RangeSlider
-          aria-label={["min", "max"]}
           value={sliderValue}
-          min={0}
-          max={1000000}
+          min={100}
+          max={80000}
           step={100}
           onChange={handleSliderChange}
         >

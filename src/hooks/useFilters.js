@@ -5,14 +5,13 @@ export default function useFilters() {
   const [allFilters, setAllFilters] = useState({
     sortType: "asc",
     sortField: "price",
-    minPrice: 0,
+    minPrice: 100,
     maxPrice: 160000,
     brand: [],
     rating: [],
   });
 
   const { productList, loading } = useMainPageFetch({ allFilters });
-  console.log(productList, "useFiltersProducts");
 
   const handleFilterChange = useCallback((filterType, value) => {
     setAllFilters((prev) => {
@@ -49,8 +48,8 @@ export default function useFilters() {
     setAllFilters({
       sortType: "asc",
       sortField: "price",
-      minPrice: 0,
-      maxPrice: 10000,
+      minPrice: 100,
+      maxPrice: 800000,
       brand: [],
       rating: [],
     });

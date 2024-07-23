@@ -9,20 +9,21 @@ const MainSkeleton = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
+        w="100%"
       >
         <Box
-          padding="6"
+          padding="2"
           boxShadow="lg"
           bg="white"
-          minW={{ base: 370, sm: 250, md: 250 }}
-          minH="400px"
+          minW={{ base: 370, sm: 250, md: 245 }}
+          minH="350px"
           display="flex"
           flexDirection="column"
           alignItems="center"
-          justifyContent="center"
-          gap="4"
+          justifyContent="space-around"
+          gap="12"
         >
-          <SkeletonCircle size="28" p={["8%", "10%", "18%"]} rounded="md" />
+          <SkeletonCircle w="44" h="32" p={["8%", "10%", "6%"]} rounded="md" />
           <SkeletonText
             mt="4"
             noOfLines={4}

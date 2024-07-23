@@ -20,8 +20,8 @@ export const Filters = ({
       minH="100vh"
       borderColor="whitesmoke"
       bg="white"
-      w="100%"
-      p="0"
+      maxW={400}
+      p="2"
     >
       <Box
         display={{ base: "flex", md: "none" }}
@@ -100,7 +100,10 @@ export const Filters = ({
         ))}
       </Grid>
 
-      <PriceFilter handlePriceChange={handlePriceChange} />
+      <PriceFilter
+        handlePriceChange={handlePriceChange}
+        handleClearAllFilters={handleClearAllFilters}
+      />
 
       <Box display={{ base: "block", md: "none" }}>
         <SortBy handleSortChange={handleSortChange} />

@@ -1,9 +1,25 @@
 /* eslint-disable react/prop-types */
-import { Box, Image } from "@chakra-ui/react";
+import { Box, Button, Image } from "@chakra-ui/react";
 import { CartButtons } from "./CartButtons";
+import { useEffect } from "react";
 
 const Images = ({ product, imageIndex, handleImageIndex }) => {
   const descriptiveImages = product.DescriptiveImages;
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Tab") {
+        e.preventDefault();
+        handleImageIndex((prev) => (prev + 1) % descriptiveImages.length);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [descriptiveImages.length, handleImageIndex]);
 
   return (
     <Box
@@ -34,7 +50,7 @@ const Images = ({ product, imageIndex, handleImageIndex }) => {
           flexDirection={{ base: "row", md: "column " }}
         >
           {descriptiveImages.map((img, index) => (
-            <Box
+            <Button
               key={index}
               w={{ base: 44, md: 32, lg: 32 }}
               h={{ base: 32, md: 32, lg: 32 }}
@@ -44,10 +60,13 @@ const Images = ({ product, imageIndex, handleImageIndex }) => {
               justifyContent="center"
               alignItems="center"
               cursor="pointer"
+              outline="none"
+              rounded="none"
+              bg="transparent"
               onClick={() => handleImageIndex(index)}
             >
               <Image src={img} p={{ base: 4, sm: 8, md: 4 }} />
-            </Box>
+            </Button>
           ))}
         </Box>
 

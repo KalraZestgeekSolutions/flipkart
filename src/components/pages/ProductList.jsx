@@ -15,8 +15,6 @@ import { Link } from "react-router-dom";
 import MainSkeleton from "../skeleton/MainSkeleton";
 
 const ProductList = ({ loading, productList }) => {
-  console.log(productList, "prerijekmf");
-
   return (
     <Grid
       templateColumns={{
@@ -68,8 +66,8 @@ const ProductList = ({ loading, productList }) => {
                 >
                   <Image
                     objectFit="cover"
-                    src={product.HeadImage}
-                    alt={product.productTitle}
+                    src={product.headImage}
+                    alt={product.productTitle.slice(0, 80)}
                     borderRadius="lg"
                     my="5"
                     maxW={["65%"]}

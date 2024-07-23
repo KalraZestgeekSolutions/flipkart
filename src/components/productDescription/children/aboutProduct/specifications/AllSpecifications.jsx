@@ -24,8 +24,7 @@ const AllSpecifications = ({ product, onToggle, isOpen }) => {
       </Box>
       <Box fontWeight={500}>
         <SpecificationsFilters product={product} section={"General"} />
-        <Divider my="6" />
-
+        {isOpen ? "" : <Divider my="6" />}
         <Box
           position="relative"
           display={isOpen ? "none" : "unset"}
@@ -55,8 +54,7 @@ const AllSpecifications = ({ product, onToggle, isOpen }) => {
             section={"Print"}
             keysToDisplay={["Max_Print_Resolution_(Mono)", "Print_Speed_Mono"]}
           />
-          <Divider my="6" />
-
+          {/* <Divider my="6" />/ */}
           <SpecificationsFilters
             product={product}
             section={"Paper_Handling"}
@@ -68,18 +66,14 @@ const AllSpecifications = ({ product, onToggle, isOpen }) => {
             section={"Dimensions_And_Weight"}
           />
           <Divider my="6" />
-
           <SpecificationsFilters product={product} section={"Connectivity"} />
-
           <Divider my="6" />
-
           <SpecificationsFilters
             product={product}
             section={"Compatible_Inks/toners"}
             keysToDisplay={["Compatible_Black_cartridge"]}
           />
-          <Divider my="6" />
-
+          {/* <Divider my="6" /> */}
           <SpecificationsFilters product={product} section={"Sales_Package"} />
         </Collapse>
       </Box>

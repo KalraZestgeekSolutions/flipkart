@@ -18,7 +18,6 @@ const useDescriptionFetch = () => {
       setLoading(true);
       try {
         const response = await axios.get(`${DESCRIPTIONAPI}/${productId}`);
-        console.log(response);
         setProduct(response.data);
         setLoading(false);
       } catch (err) {

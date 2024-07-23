@@ -17,11 +17,6 @@ const Main = () => {
     handleFilterChange,
     handlePriceChange,
   } = useFilters();
-
-  console.log(allFilters, "allfiltersss");
-  console.log(productList, "Mainnnnnn");
-  console.log(loading);
-
   const btnRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -44,7 +39,14 @@ const Main = () => {
           btnRef={btnRef}
           isOpen={isOpen}
         >
-          <Filters onClose={onClose} />
+          <Filters
+            onClose={onClose}
+            allFilters={allFilters}
+            handleClearAllFilters={handleClearAllFilters}
+            handleSortChange={handleSortChange}
+            handleFilterChange={handleFilterChange}
+            handlePriceChange={handlePriceChange}
+          />
         </FilterTemplate>
       </GridItem>
       <Box
@@ -59,7 +61,7 @@ const Main = () => {
         <Box
           display={{ base: "none", md: "block" }}
           colSpan={{ xl: 1 }}
-          w={["100%", "100%", "55%"]}
+          w={["100%", "100%", "55%", "50%"]}
         >
           <Filters
             allFilters={allFilters}

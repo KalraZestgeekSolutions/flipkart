@@ -61,7 +61,7 @@ const Cart = () => {
                       cursor="pointer"
                       w="100%"
                       h="100%"
-                      src={item?.HeadImage}
+                      src={item?.headImage}
                     />
                   </Box>
                   <Flex direction="column" flex="1" gap="5">
