@@ -38,7 +38,8 @@ const SortBy = (props) => {
               variant="none"
               rounded={false}
               borderBottom="2px solid"
-              borderColor={activeTab === index ? "blue.500" : "gray.200"}
+              borderColor={activeTab === index ? "#2874f0" : "gray.200"}
+              color={activeTab === index ? "#2874f0" : " black"}
               key={tab.value}
               onClick={() => handleTabChange(index, tab)}
             >

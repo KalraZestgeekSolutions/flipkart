@@ -7,6 +7,7 @@ import { Header } from "./components/pages/Header";
 import { Cart } from "./components/cart/Cart";
 import { CartProvider } from "./context/CartProvider";
 import { theme } from "./themes/Theme";
+import { Authentication } from "./components/auth/Auth";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
               <Route exact path="/" element={<Main />} />
               <Route exact path="/:productId" element={<CardDescription />} />
               <Route exact path="/cart" element={<Cart />} />
+              <Route exact path="/auth/:route" element={<Authentication />} />
             </Routes>
           </CartProvider>
         </BrowserRouter>

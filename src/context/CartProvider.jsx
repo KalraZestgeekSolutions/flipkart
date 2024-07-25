@@ -1,7 +1,7 @@
-/* eslint-disable react/prop-types */
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "./CartContext";
+import axios from "axios";
 
 export const CartProvider = ({ children }) => {
   const navigate = useNavigate();
@@ -9,85 +9,39 @@ export const CartProvider = ({ children }) => {
     data: [],
   });
 
-  const handleAddItem = useCallback(
-    (product) => {
-      setCartData((prev) => {
-        const updatedCartData = [...prev.data, { ...product, quantity: 1 }];
-        return {
-          ...prev,
-          data: updatedCartData,
-        };
-      });
-      navigate("/cart");
+  const fetchCartData = useCallback(
+    async (id) => {
+      const token = localStorage.getItem("loginResponse");
+      if (!token) {
+        console.error("No token found in local storage");
+        navigate("/auth/login");
+        return;
+      }
+
+      try {
+        const response = await axios.post(
+          `https://flipakartworking.onrender.com/api/cart`,
+          { printerId: id },
+          {
+            headers: {
+              Authorization: `Bearer ${JSON.parse(token)}`,
+            },
+          }
+        );
+        console.log(response);
+        setCartData({ data: response.data });
+      } catch (error) {
+        console.error("Error fetching cart data:", error);
+      }
     },
     [navigate]
   );
 
-  const handleRemoveItem = useCallback((_id) => {
-    setCartData((prev) => {
-      const updatedCartData = prev?.data.filter((item) => item?._id !== _id);
-      return {
-        ...prev,
-        data: updatedCartData,
-      };
-    });
-  }, []);
-
-  const handleIncrementQuantity = useCallback((index) => {
-    setCartData((prevData) => {
-      const updatedCartData = prevData.data.map((item, i) =>
-        i === index ? { ...item, quantity: item.quantity + 1 } : item
-      );
-      return {
-        ...prevData,
-        data: updatedCartData,
-      };
-    });
-  }, []);
-
-  const handleDecrementQuantity = useCallback((index) => {
-    setCartData((prevData) => {
-      const updatedCartData = prevData.data.map((item, i) =>
-        i === index && item?.quantity > 1
-          ? { ...item, quantity: item?.quantity - 1 }
-          : item
-      );
-      return {
-        ...prevData,
-        data: updatedCartData,
-      };
-    });
-  }, []);
-
-  const totalPriceOfAll = useMemo(() => {
-    return cartData.data
-      .reduce((total, item) => {
-        const itemPrice = item?.price * item?.quantity;
-        return total + itemPrice;
-      }, 0)
-      .toFixed(2);
-  }, [cartData]);
-
-  const calculatedTotalAmount = useMemo(() => {
-    return cartData.data
-      .reduce((total, item) => {
-        const discountedPrice = item?.discountedPrice || item?.price;
-        const itemAmount = discountedPrice * item?.quantity;
-        return total + itemAmount;
-      }, 0)
-      .toFixed(2);
-  }, [cartData]);
-
-  const calculatedTotalDiscount = useMemo(() => {
-    return cartData.data
-      .reduce((total, item) => {
-        const itemPrice = item?.price * item?.quantity;
-        const discountedPrice = item?.discountedPrice || item?.price;
-        const discountAmount = itemPrice - discountedPrice * item?.quantity;
-        return total + discountAmount;
-      }, 0)
-      .toFixed(2);
-  }, [cartData]);
+  const handleAddItem = (printerId, e) => {
+    // e.preventDefault();
+    console.log("clicked");
+    fetchCartData(printerId);
+  };
 
   const isInCart = useCallback(
     (productId) => {
@@ -101,13 +55,7 @@ export const CartProvider = ({ children }) => {
       value={{
         cartData,
         handleAddItem,
-        handleRemoveItem,
-        handleIncrementQuantity,
-        handleDecrementQuantity,
         isInCart,
-        calculatedTotalDiscount,
-        calculatedTotalAmount,
-        totalPriceOfAll,
       }}
     >
       {children}

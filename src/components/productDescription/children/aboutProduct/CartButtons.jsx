@@ -1,11 +1,11 @@
-/* eslint-disable react/prop-types */
 import { Button, Flex } from "@chakra-ui/react";
 import { useContext } from "react";
 import { CartContext } from "@/context/CartContext";
 import { useNavigate } from "react-router-dom";
 
-const CartButtons = ({ product }) => {
-  const { handleAddItem, isInCart } = useContext(CartContext);
+const CartButtons = () => {
+  const { handleAddItem, isInCart, cartData } = useContext(CartContext);
+  console.log(cartData.data);
   const navigate = useNavigate();
 
   const handleGoToCart = () => {
@@ -26,9 +26,9 @@ const CartButtons = ({ product }) => {
       py="1"
       h="auto"
       px={{ base: 5, md: 2 }}
-      direction={{ base: "column", sm: "row " }}
+      direction={{ base: "column", sm: "row" }}
     >
-      {isInCart(product._id) ? (
+      {isInCart(cartData) ? (
         <Button
           w="100%"
           bg="orange"
@@ -50,7 +50,7 @@ const CartButtons = ({ product }) => {
           rounded={false}
           color="white"
           fontWeight={800}
-          onClick={() => handleAddItem(product)}
+          onClick={() => handleAddItem(cartData.data?.printerId)}
         >
           ADD TO CART
         </Button>
@@ -71,4 +71,4 @@ const CartButtons = ({ product }) => {
   );
 };
 
-export {CartButtons}
+export { CartButtons };

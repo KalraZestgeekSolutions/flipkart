@@ -19,7 +19,7 @@ const useMainPageFetch = ({ allFilters }) => {
         minPrice: minPrice,
         maxPrice: maxPrice,
       });
-      console.log(response);
+      // console.log(response);
       setProductList(response.data.data);
     } catch (err) {
       console.error(err);

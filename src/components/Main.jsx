@@ -72,7 +72,10 @@ const Main = () => {
           />
         </Box>
 
-        <GridItem colSpan={{ base: 1 }} w={["100%", "100%", "70%", "120%"]}>
+        <GridItem
+          colSpan={{ base: 1 }}
+          w={["100%", "100%", "100%", "140%", "170%"]}
+        >
           <Box
             display={{ base: "none", md: "block" }}
             colSpan={{ xl: 1 }}
