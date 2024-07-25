@@ -6,6 +6,8 @@ import { CartContext } from "@/context/CartContext";
 
 const Header = () => {
   const { cartData } = useContext(CartContext);
+  const user = JSON.parse(localStorage.getItem("loginResponse") || "{}");
+  const token = user.token;
 
   return (
     <Box
@@ -41,7 +43,7 @@ const Header = () => {
         <Link _hover={{}} to="/">
           HOME
         </Link>
-        <Link _hover={{}} to="/cart">
+        <Link _hover={{}} to={token ? "/cart" : "/auth/login"}>
           CART ({cartData.data.length} items)
         </Link>
 

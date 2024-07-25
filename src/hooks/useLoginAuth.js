@@ -18,13 +18,10 @@ export const useLoginAuth = () => {
           password: loginCredentials.password,
         }
       );
-      console.log("Login", response);
       localStorage.setItem("loginResponse", JSON.stringify(response.data));
       navigate("/");
     } catch (err) {
-      console.error(err);
       const errorsMsg = err.response.data.errors;
-      console.log(errorsMsg);
       setLoginError(errorsMsg);
     }
   }, [loginCredentials.email, loginCredentials.password, navigate]);

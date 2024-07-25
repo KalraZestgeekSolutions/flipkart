@@ -3,9 +3,8 @@ import { useContext } from "react";
 import { CartContext } from "@/context/CartContext";
 import { useNavigate } from "react-router-dom";
 
-const CartButtons = () => {
-  const { handleAddItem, isInCart, cartData } = useContext(CartContext);
-  console.log(cartData.data);
+const CartButtons = ({ product }) => {
+  const { handleAddItem, isInCart } = useContext(CartContext);
   const navigate = useNavigate();
 
   const handleGoToCart = () => {
@@ -28,7 +27,7 @@ const CartButtons = () => {
       px={{ base: 5, md: 2 }}
       direction={{ base: "column", sm: "row" }}
     >
-      {isInCart(cartData) ? (
+      {isInCart(product._id) ? (
         <Button
           w="100%"
           bg="orange"
@@ -50,7 +49,7 @@ const CartButtons = () => {
           rounded={false}
           color="white"
           fontWeight={800}
-          onClick={() => handleAddItem(cartData.data?.printerId)}
+          onClick={() => handleAddItem(product._id)}
         >
           ADD TO CART
         </Button>

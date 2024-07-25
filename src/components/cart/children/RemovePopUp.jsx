@@ -13,13 +13,13 @@ import {
 import React, { useContext } from "react";
 import { CartContext } from "@/context/CartContext";
 
-const RemovePopUp = ({ itemId }) => {
+const RemovePopUp = ({ item }) => {
   const { handleRemoveItem } = useContext(CartContext);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const finalRef = React.useRef(null);
 
   const handleRemoveAndCloseModal = () => {
-    handleRemoveItem(itemId);
+    handleRemoveItem(item?.printerId?._id);
     onClose();
   };
   return (

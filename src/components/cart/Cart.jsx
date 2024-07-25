@@ -28,8 +28,8 @@ const Cart = () => {
         maxH={{ base: "55vh", lg: "87vh" }}
         maxW={{ base: "auto", md: "60vw", lg: "90%" }}
         overflow="hidden"
-        border="3px soild"
-        borderColor="black"
+        border="1px solid"
+        borderColor="gray.400"
         position="relative"
       >
         <Box
@@ -46,13 +46,13 @@ const Cart = () => {
           ) : (
             productList.map((item, index) => (
               <Box
+                key={index}
                 w="100%"
                 display="flex"
                 justifyContent="center"
                 alignItems="center"
                 flexDirection="column"
                 gap="2"
-                key={item?._id}
                 p="2"
               >
                 <Flex gap="3" w="100%">
@@ -61,12 +61,12 @@ const Cart = () => {
                       cursor="pointer"
                       w="100%"
                       h="100%"
-                      src={item?.headImage}
+                      src={item.printerId?.headImage}
                     />
                   </Box>
                   <Flex direction="column" flex="1" gap="5">
                     <Text fontWeight={500} noOfLines={1} fontSize="20">
-                      {item?.productTitle}
+                      {item.printerId?.productTitle}
                     </Text>
                     <Flex gap="2" justifyContent="start" alignItems="center">
                       <Text
@@ -74,23 +74,23 @@ const Cart = () => {
                         color="gray.500"
                         as="del"
                       >
-                        &#8377;{item?.price}
+                        &#8377;{item.printerId?.price}
                       </Text>
                       <Text fontSize={{ base: "sm", md: "xl" }} as="b">
-                        &#8377;{item?.discountedPrice}
+                        &#8377;{item.printerId?.discountedPrice}
                       </Text>
                       <Text
                         fontWeight={{ base: 400, md: 500 }}
                         fontSize={{ base: "sm", md: "lg" }}
                         color="#388e3c"
                       >
-                        {item?.discountPercentage}% Off
+                        {item.printerId?.discountPercentage}% Off
                       </Text>
                     </Flex>
                   </Flex>
                 </Flex>
                 {/* update Quantity */}
-                <UpdateQuantity item={item} itemId={item?._id} index={index} />
+                <UpdateQuantity item={item} />
                 <Divider my="5" />
               </Box>
             ))
@@ -121,7 +121,6 @@ const Cart = () => {
           </Button>
         </Flex>
       </Flex>
-
       {/* Price Details */}
       <Flex w={{ base: "100%", md: "40%", xl: "50%" }}>
         <PriceDetails />

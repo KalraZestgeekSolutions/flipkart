@@ -1,10 +1,9 @@
-/* eslint-disable react/prop-types */
 import { Button, Flex, Text } from "@chakra-ui/react";
 import { useContext } from "react";
 import { CartContext } from "@/context/CartContext";
 import { RemovePopUp } from "./RemovePopUp";
 
-const UpdateQuantity = ({ item, itemId, index }) => {
+const UpdateQuantity = ({ item }) => {
   const { handleIncrementQuantity, handleDecrementQuantity } =
     useContext(CartContext);
 
@@ -17,7 +16,9 @@ const UpdateQuantity = ({ item, itemId, index }) => {
       >
         <Button
           variant="outline"
-          onClick={() => handleDecrementQuantity(index)}
+          onClick={() =>
+            handleDecrementQuantity(item?.printerId?._id, item.quantity)
+          }
           cursor={`${item?.quantity === 1 ? "default" : "pointer"} `}
           color={`${item?.quantity === 1 ? "gray.400" : "black"} `}
           rounded="100%"
@@ -30,7 +31,9 @@ const UpdateQuantity = ({ item, itemId, index }) => {
         <Text fontSize="20">{item?.quantity}</Text>
         <Button
           variant="outline"
-          onClick={() => handleIncrementQuantity(index)}
+          onClick={() =>
+            handleIncrementQuantity(item?.printerId?._id, item.quantity)
+          }
           rounded="100%"
           fontSize="24"
           p="3"
@@ -44,7 +47,7 @@ const UpdateQuantity = ({ item, itemId, index }) => {
           SAVE FOR LATER
         </Button>
 
-        <RemovePopUp itemId={itemId} />
+        <RemovePopUp item={item} />
       </Flex>
     </Flex>
   );

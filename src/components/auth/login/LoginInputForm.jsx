@@ -1,4 +1,4 @@
-import { Button, Input, Text } from "@chakra-ui/react";
+import { Button, Input, Stack, Text } from "@chakra-ui/react";
 
 const LoginInputForm = ({
   loginButtonLabel,
@@ -17,27 +17,30 @@ const LoginInputForm = ({
 
   return (
     <form onSubmit={handleLoginUser}>
-      <Input
-        variant="flushed"
-        placeholder="Enter Email/Mobile number"
-        borderBottom="1px solid"
-        borderColor="gray.400"
-        name="email"
-        value={loginCredentials.email}
-        onChange={(e) => handleLoginInputChange("email", e.target.value)}
-      />
-      {getErrorMessage("email")}
-      <Input
-        variant="flushed"
-        placeholder="Enter Password"
-        borderBottom="1px solid"
-        borderColor="gray.400"
-        type="password"
-        name="password"
-        value={loginCredentials.password}
-        onChange={(e) => handleLoginInputChange("password", e.target.value)}
-      />
-      {getErrorMessage("password")}
+      <Stack gap="6">
+        <Input
+          variant="flushed"
+          placeholder="Enter Email/Mobile number"
+          borderBottom="1px solid"
+          borderColor="gray.400"
+          name="email"
+          value={loginCredentials.email}
+          onChange={(e) => handleLoginInputChange("email", e.target.value)}
+        />
+        {getErrorMessage("email")}
+
+        <Input
+          variant="flushed"
+          placeholder="Enter Password"
+          borderBottom="1px solid"
+          borderColor="gray.400"
+          type="password"
+          name="password"
+          value={loginCredentials.password}
+          onChange={(e) => handleLoginInputChange("password", e.target.value)}
+        />
+        {getErrorMessage("password")}
+      </Stack>
       <Button
         type="submit"
         variant="solid"
