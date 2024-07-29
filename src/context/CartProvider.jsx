@@ -11,96 +11,149 @@ export const CartProvider = ({ children }) => {
   const user = JSON.parse(localStorage.getItem("loginResponse") || "{}");
   const token = user.token;
 
-  // add item to cart
+  // Save cart to local storage
+  const saveCartToLocal = (cartItems) => {
+    localStorage.setItem("cartData", JSON.stringify(cartItems));
+  };
+
+  // Load cart from local storage
+  const loadCartFromLocal = () => {
+    const cartItems = JSON.parse(localStorage.getItem("cartData") || "[]");
+    setCartData({ data: cartItems });
+  };
+
+  // Add item to cart
   const addItemToCart = useCallback(
-    async (id) => {
-      if (!token) {
-        console.error("No token found in local storage");
-        navigate("/auth/login");
-        return;
-      }
-      try {
-        const response = await axios.post(
-          `https://flipakartworking.onrender.com/api/cart`,
-          { printerId: id },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
+    async (item) => {
+      if (token) {
+        try {
+          const response = await axios.post(
+            `https://flipakartworking.onrender.com/api/cart`,
+            { printerId: item?._id },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setCartData((prev) => ({
+            ...prev,
+            data: response?.data?.items,
+          }));
+          saveCartToLocal(response?.data?.items);
+          navigate("/cart");
+        } catch (error) {
+          console.error("Error adding item to cart:", error);
+        }
+      } else {
+        try {
+          const newCartItem = {
+            printerId: {
+              _id: item._id,
+              productTitle: item.productTitle,
+              headImage: item.headImage,
+              price: item.price,
+              discountPercentage: item.discountPercentage,
+              discountedPrice: item.discountedPrice,
             },
-          }
-        );
-        setCartData((prev) => ({
-          ...prev,
-          data: response?.data?.items,
-        }));
-        navigate("/cart");
-      } catch (error) {
-        console.error("Error adding item to cart:", error);
+            quantity: 1,
+          };
+          setCartData((prev) => {
+            const updatedCart = [...prev.data, newCartItem];
+            saveCartToLocal(updatedCart);
+            return { data: updatedCart };
+          });
+          navigate("/cart");
+        } catch (error) {
+          console.error("Error fetching item data:", error);
+        }
       }
     },
     [navigate, token]
   );
 
-  // get items from cart
+  // Get items from cart
   const getCartItems = useCallback(async () => {
-    if (!token) {
-      console.error("No token found in local storage");
-      navigate("/auth/login");
-      return;
-    }
-    try {
-      const response = await axios.get(
-        `https://flipakartworking.onrender.com/api/cart`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setCartData({ data: response?.data?.items });
-    } catch (error) {
-      console.error("Error fetching cart data:", error);
-    }
-  }, [token, navigate]);
-
-  const updateQuantity = useCallback(
-    async (itemId, quantity) => {
+    if (token) {
       try {
-        const response = await axios.put(
-          `https://flipakartworking.onrender.com/api/cart/${itemId}`,
-          { quantity },
+        const response = await axios.get(
+          `https://flipakartworking.onrender.com/api/cart`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           }
         );
-        setCartData({
-          data: response?.data?.items,
-        });
+        setCartData({ data: response?.data?.items });
+        saveCartToLocal(response?.data?.items);
       } catch (error) {
-        console.error("Error updating quantity:", error);
+        console.error("Error fetching cart data:", error);
+      }
+    }
+  }, [token]);
+
+  // Update quantity
+  const updateQuantity = useCallback(
+    async (itemId, quantity) => {
+      if (token) {
+        try {
+          const response = await axios.put(
+            `https://flipakartworking.onrender.com/api/cart/${itemId}`,
+            { quantity },
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setCartData({
+            data: response?.data?.items,
+          });
+          saveCartToLocal(response?.data?.items); // Save server cart to local storage
+        } catch (error) {
+          console.error("Error updating quantity:", error);
+        }
+      } else {
+        setCartData((prev) => {
+          const updatedCart = prev.data.map((item) =>
+            item?.printerId?._id === itemId ? { ...item, quantity } : item
+          );
+          saveCartToLocal(updatedCart);
+          return { data: updatedCart };
+        });
       }
     },
     [token]
   );
 
+  // Delete item (local storage or server)
   const deleteItem = useCallback(
     async (itemId) => {
-      try {
-        const response = await axios.delete(
-          `https://flipakartworking.onrender.com/api/cart/${itemId}`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setCartData({
-          data: response?.data?.items,
+      if (token) {
+        try {
+          const response = await axios.delete(
+            `https://flipakartworking.onrender.com/api/cart/${itemId}`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+          setCartData({
+            data: response?.data?.items,
+          });
+          saveCartToLocal(response?.data?.items); // Save server cart to local storage
+        } catch (error) {
+          console.error("Error deleting item:", error);
+        }
+      } else {
+        setCartData((prev) => {
+          const updatedCart = prev.data.filter(
+            (item) => item?.printerId?._id !== itemId
+          );
+          saveCartToLocal(updatedCart);
+          return { data: updatedCart };
         });
-      } catch (error) {
-        console.error("Error updating quantity:", error);
       }
     },
     [token]
@@ -112,8 +165,26 @@ export const CartProvider = ({ children }) => {
     }
   }, [token, getCartItems]);
 
-  const handleAddItem = (id) => {
-    addItemToCart(id);
+  // Sync local storage cart data to server when token is obtained
+  useEffect(() => {
+    if (token) {
+      const syncLocalCartToServer = async () => {
+        const localCartItems = JSON.parse(
+          localStorage.getItem("cartData") || "[]"
+        );
+        for (const item of localCartItems) {
+          await addItemToCart(item?.printerId?._id);
+        }
+        getCartItems(); // Fetch updated cart from server
+      };
+      syncLocalCartToServer();
+    } else {
+      loadCartFromLocal();
+    }
+  }, [token, addItemToCart, getCartItems]);
+
+  const handleAddItem = (item) => {
+    addItemToCart(item);
   };
 
   const handleIncrementQuantity = (itemId, currentQuantity) => {
@@ -153,17 +224,14 @@ export const CartProvider = ({ children }) => {
   const totalPriceOfAll = useMemo(() => {
     return cartData.data
       .reduce((total, item) => {
-        return total + item.printerId?.price * item.quantity;
+        return total + item?.printerId?.price * item.quantity;
       }, 0)
       .toFixed(2);
   }, [cartData.data]);
 
   const isInCart = useCallback(
     (productId) => {
-      return (
-        Array.isArray(cartData.data) &&
-        cartData.data.some((item) => item?._id === productId)
-      );
+      return cartData.data.some((item) => item?.printerId?._id === productId);
     },
     [cartData.data]
   );

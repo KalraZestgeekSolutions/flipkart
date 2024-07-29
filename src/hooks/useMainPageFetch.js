@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { MAINAPI } from "../constants/API";
 import axios from "axios";
 
-const useMainPageFetch = ({ allFilters }) => {
+const useGetProductListing = ({ allFilters }) => {
   const [loading, setLoading] = useState(true);
   const [productList, setProductList] = useState([]);
   const { brand, rating, sortType, sortField, minPrice, maxPrice } =
@@ -19,6 +19,7 @@ const useMainPageFetch = ({ allFilters }) => {
         minPrice: minPrice,
         maxPrice: maxPrice,
       });
+      console.log("mainnn", response);
       setProductList(response.data.data);
     } catch (err) {
       console.error(err);
@@ -36,4 +37,4 @@ const useMainPageFetch = ({ allFilters }) => {
     loading,
   };
 };
-export { useMainPageFetch };
+export { useGetProductListing };

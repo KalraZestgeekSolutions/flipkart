@@ -50,4 +50,4 @@ const AuthLeftCard = ({ title, description1, description2 }) => {
   );
 };
 
-export default AuthLeftCard;
+export { AuthLeftCard };

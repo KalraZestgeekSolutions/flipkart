@@ -49,7 +49,7 @@ const CartButtons = ({ product }) => {
           rounded={false}
           color="white"
           fontWeight={800}
-          onClick={() => handleAddItem(product._id)}
+          onClick={() => handleAddItem(product)}
         >
           ADD TO CART
         </Button>

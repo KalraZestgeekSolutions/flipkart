@@ -26,17 +26,20 @@ export const useLoginAuth = () => {
     }
   }, [loginCredentials.email, loginCredentials.password, navigate]);
 
-  const handleLoginInputChange = (name, value) => {
+  const handleLoginInputChange = useCallback((name, value) => {
     setLoginCredentials((prev) => ({
       ...prev,
       [name]: value,
     }));
-  };
+  }, []);
 
-  const handleLoginUser = (e) => {
-    e.preventDefault();
-    loginUser();
-  };
+  const handleLoginUser = useCallback(
+    (e) => {
+      e.preventDefault();
+      loginUser();
+    },
+    [loginUser]
+  );
 
   return {
     loginCredentials,

@@ -8,31 +8,27 @@ export const EmptyCart = () => {
   };
 
   return (
-    <>
-      <Flex
-        minW="65vw"
-        p="5"
-        justifyContent="center"
-        alignItems="center"
-        direction="column"
-        gap="5"
+    <Flex
+      minW="65vw"
+      p="5"
+      justifyContent="center"
+      alignItems="center"
+      direction="column"
+      gap="5"
+    >
+      <Text fontSize={24}>Your cart is empty</Text>
+      <Button
+        px="8"
+        py="8"
+        bg="orange"
+        color="white"
+        onClick={handleGoToHome}
+        _hover={{}}
+        rounded={false}
+        fontWeight={900}
       >
-        <Text fontSize={24}>Your cart is empty</Text>
-        <Button
-          px="8"
-          py="8"
-          bg="orange"
-          color="white"
-          onClick={handleGoToHome}
-          _hover={{}}
-          rounded={false}
-          fontWeight={900}
-        >
-          SHOP NOW
-        </Button>
-      </Flex>
-    </>
+        SHOP NOW
+      </Button>
+    </Flex>
   );
 };
-
-// export default EmptyCart;

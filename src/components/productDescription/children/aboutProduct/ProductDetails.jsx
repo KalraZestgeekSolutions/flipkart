@@ -21,15 +21,15 @@ const ProductDetails = ({ product }) => {
         <Text
           color="black"
           as=""
-          fontSize={{ base: "3xl", md: "xl", lg: "3xl" }}
+          fontSize={{ base: "3xl", md: "sm", lg: "3xl" }}
         >
           &#8377;{product.discountedPrice}
         </Text>
 
-        <Text color="gray.500" as="s" fontSize="xl">
+        <Text color="gray.500" as="s" fontSize={{ md: "14px", lg: "xl" }}>
           &#8377;{product.price}
         </Text>
-        <Text color="#388e3c" as="b" fontSize="sm">
+        <Text color="#388e3c" as="b" fontSize={{ md: "12px", lg: "sm" }}>
           {product.discountPercentage}% off
         </Text>
       </HStack>

@@ -1,13 +1,12 @@
-import PropTypes from "prop-types";
 import { useRef } from "react";
 import { Box, Grid, GridItem, useDisclosure } from "@chakra-ui/react";
 import { Filters } from "./filter/Filters";
 import { ProductList } from "./pages/ProductList";
 import { SortBy } from "./filter/children/SortBy";
 import { FilterTemplate } from "./templates/FilterTemplate";
-import useFilters from "../hooks/useFilters";
+import useAllFiltersComponent from "../hooks/useAllFiltersComponent";
 
-const Main = () => {
+const HomePage = () => {
   const {
     productList,
     loading,
@@ -16,7 +15,8 @@ const Main = () => {
     handleSortChange,
     handleFilterChange,
     handlePriceChange,
-  } = useFilters();
+  } = useAllFiltersComponent();
+
   const btnRef = useRef();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -61,7 +61,7 @@ const Main = () => {
         <Box
           display={{ base: "none", md: "block" }}
           colSpan={{ xl: 1 }}
-          w={["100%", "100%", "55%", "50%"]}
+          w={{ base: "100%", md: "55%", lg: "50%" }}
         >
           <Filters
             allFilters={allFilters}
@@ -74,7 +74,7 @@ const Main = () => {
 
         <GridItem
           colSpan={{ base: 1 }}
-          w={["100%", "100%", "100%", "140%", "170%"]}
+          w={{ base: "100%", lg: "140%", xl: "170%" }}
         >
           <Box
             display={{ base: "none", md: "block" }}
@@ -90,8 +90,5 @@ const Main = () => {
     </Grid>
   );
 };
-SortBy.propTypes = {
-  data: PropTypes.string,
-};
 
-export default Main;
+export { HomePage };

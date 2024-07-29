@@ -14,6 +14,8 @@ export const Filters = ({
   handleFilterChange,
   handlePriceChange,
 }) => {
+  const hasFilters =
+    allFilters && (allFilters.brand.length > 0 || allFilters.rating.length > 0);
   return (
     <Box
       border="2px"
@@ -47,14 +49,18 @@ export const Filters = ({
         <Heading size="md" mb="2">
           Filters
         </Heading>
-        <Text
-          color="#2874f0"
-          fontWeight="600"
-          cursor="pointer"
-          onClick={handleClearAllFilters}
-        >
-          CLEAR ALL
-        </Text>
+        {hasFilters ? (
+          <Text
+            color="#2874f0"
+            fontWeight="600"
+            cursor="pointer"
+            onClick={handleClearAllFilters}
+          >
+            CLEAR ALL
+          </Text>
+        ) : (
+          ""
+        )}
       </Flex>
 
       <Grid templateColumns="repeat(2,1fr)" gap="4" p="2">

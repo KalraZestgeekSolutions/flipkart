@@ -9,69 +9,82 @@ import {
   RangeSliderFilledTrack,
   RangeSliderThumb,
 } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 
 const PriceFilter = ({ heading, handlePriceChange, handleClearAllFilters }) => {
-  const [sliderValue, setSliderValue] = useState([100, 80000]);
+  const DEFAULT_SLIDER_VALUE = [100, 65000];
+  const [sliderValue, setSliderValue] = useState(DEFAULT_SLIDER_VALUE);
 
   useEffect(() => {
     handlePriceChange(sliderValue);
   }, [sliderValue, handlePriceChange, handleClearAllFilters]);
 
   const handleClear = () => {
-    setSliderValue([100, 80000]);
+    setSliderValue(DEFAULT_SLIDER_VALUE);
   };
 
   const handleSliderChange = (val) => {
     setSliderValue(val);
   };
 
-  const handleMinSelectChange = (e) => {
-    const value = parseInt(e.target.value);
-    if (value <= sliderValue[1]) {
-      setSliderValue([value, sliderValue[1]]);
-    }
-  };
+  const handleMinSelectChange = useCallback(
+    (e) => {
+      const value = parseInt(e.target.value);
+      if (value <= sliderValue[1]) {
+        setSliderValue([value, sliderValue[1]]);
+      }
+    },
+    [sliderValue]
+  );
 
-  const handleMaxSelectChange = (e) => {
-    const value = parseInt(e.target.value);
-    if (value >= sliderValue[0]) {
-      setSliderValue([sliderValue[0], value]);
-    }
-  };
+  const handleMaxSelectChange = useCallback(
+    (e) => {
+      const value = parseInt(e.target.value);
+      if (value >= sliderValue[0]) {
+        setSliderValue([sliderValue[0], value]);
+      }
+    },
+    [sliderValue]
+  );
 
-  const generatePriceOptions = (min, max, step) => {
+  const generatePriceOptions = useCallback((min, max, step) => {
     const options = [];
     for (let i = min; i <= max; i += step) {
       options.push({ value: i, label: i });
     }
     return options;
-  };
+  }, []);
 
-  const minPriceOptions = generatePriceOptions(100, sliderValue[1], 100);
-  const maxPriceOptions = generatePriceOptions(sliderValue[0], 100000, 100);
+  const minPriceOptions = useMemo(() => {
+    generatePriceOptions(100, sliderValue[1], 100);
+  }, [generatePriceOptions, sliderValue]);
+
+  const maxPriceOptions = useMemo(() => {
+    generatePriceOptions(sliderValue[0], 65000, 100);
+  }, [generatePriceOptions, sliderValue]);
+
+  const hasPriceFilter =
+    sliderValue[0] !== DEFAULT_SLIDER_VALUE[0] ||
+    sliderValue[1] !== DEFAULT_SLIDER_VALUE[1];
 
   return (
     <Box borderBottom="2px" borderColor="whitesmoke">
       <Box display="flex" justifyContent="space-between" alignItems="center">
         <Text as="b">{heading}</Text>
-        <Text
-          cursor="pointer"
-          fontWeight="600"
-          color="#2874f0"
-          onClick={handleClear}
-        >
-          CLEAR
-        </Text>
+        {hasPriceFilter && (
+          <Text
+            cursor="pointer"
+            fontWeight="600"
+            color="#2874f0"
+            onClick={handleClear}
+          >
+            CLEAR
+          </Text>
+        )}
       </Box>
       <Spacer mt="4" />
 
-      <Box
-        // p="4"
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-      >
+      <Box display="flex" justifyContent="space-between" alignItems="center">
         <Box>
           <Select value={sliderValue[0]} onChange={handleMinSelectChange}>
             {minPriceOptions.map((price) => (
@@ -99,7 +112,7 @@ const PriceFilter = ({ heading, handlePriceChange, handleClearAllFilters }) => {
         <RangeSlider
           value={sliderValue}
           min={100}
-          max={80000}
+          max={65000}
           step={100}
           onChange={handleSliderChange}
         >

@@ -14,7 +14,7 @@ export const useSignUpAuth = () => {
   const navigate = useNavigate();
   const [error, setError] = useState([]);
 
-  const SignUpUser = useCallback(async () => {
+  const signUpUser = useCallback(async () => {
     try {
       const response = await axios.post(
         `https://flipakartworking.onrender.com/api/auth/signup`,
@@ -25,7 +25,7 @@ export const useSignUpAuth = () => {
           password: input.password,
         }
       );
-      console.log(response);
+
       localStorage.setItem("signupResponse", JSON.stringify(response.data));
       navigate("/");
     } catch (err) {
@@ -35,17 +35,20 @@ export const useSignUpAuth = () => {
     }
   }, [input.firstName, input.lastName, input.email, input.password, navigate]);
 
-  const handleInputChange = (name, value) => {
+  const handleInputChange = useCallback((name, value) => {
     setInput((prev) => ({
       ...prev,
       [name]: value,
     }));
-  };
+  }, []);
 
-  const handleSignUp = (e) => {
-    e.preventDefault();
-    SignUpUser();
-  };
+  const handleSignUp = useCallback(
+    (e) => {
+      e.preventDefault();
+      signUpUser();
+    },
+    [signUpUser]
+  );
 
   useEffect(() => {
     if (route) {

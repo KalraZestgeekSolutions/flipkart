@@ -10,13 +10,14 @@ import { Link } from "react-router-dom";
 import LoginInputForm from "../auth/login/LoginInputForm";
 import SignupInputForm from "../auth/signup/SignupInputForm";
 import * as auth from "../../constants/AuthConstants";
-import AuthLeftCard from "../auth/childrens/AuthLeftCard";
+import { AuthLeftCard } from "../auth/childrens/AuthLeftCard";
 import { useSignUpAuth } from "../../hooks/useSignUpAuth";
 import { useLoginAuth } from "../../hooks/useLoginAuth";
 
 export const Authentication = () => {
   const { login, input, handleInputChange, handleSignUp, route, error } =
     useSignUpAuth();
+
   const {
     loginCredentials,
     handleLoginInputChange,
@@ -26,6 +27,7 @@ export const Authentication = () => {
 
   const { signUpTitle, signDescription1, signDescription2, signButtonLabel } =
     auth.signUpConstants;
+
   const { loginTitle, loginDescription1, loginDescription2, loginButtonLabel } =
     auth.loginConstants;
 
@@ -35,7 +37,7 @@ export const Authentication = () => {
       alignItems="center"
       w="100%"
       px={{ base: 12, sm: 8, md: 16, xl: 56 }}
-      py="5"
+      py="4"
       bg="gray.100"
     >
       <Card
@@ -85,17 +87,36 @@ export const Authentication = () => {
             w="100%"
           >
             {login ? (
-              <Link to="/auth/signup">
-                <Button
-                  color="#2874f0"
-                  fontWeight={700}
-                  _hover={{}}
-                  fontSize="lg"
-                  bg="transparent"
-                >
-                  New to Flipkart? Create an account
-                </Button>
-              </Link>
+              <Flex
+                direction="column"
+                justifyContent="center"
+                alignItems="center"
+                gap="2"
+              >
+                <Link to="/auth/signup">
+                  <Button
+                    color="#2874f0"
+                    fontWeight={700}
+                    _hover={{}}
+                    fontSize="lg"
+                    bg="transparent"
+                  >
+                    New to Flipkart? Create an account
+                  </Button>
+                </Link>
+
+                <Link to="/email">
+                  <Button
+                    color="#2874f0"
+                    fontWeight={700}
+                    _hover={{}}
+                    fontSize="lg"
+                    bg="transparent"
+                  >
+                    Forget Password
+                  </Button>
+                </Link>
+              </Flex>
             ) : (
               <Link
                 to="/auth/login"

@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
-import { useMainPageFetch } from "./useMainPageFetch";
+import { useGetProductListing } from "./useGetProductListing";
 
-export default function useFilters() {
+export default function useAllFiltersComponent() {
   const [allFilters, setAllFilters] = useState({
     sortType: "asc",
     sortField: "price",
@@ -11,7 +11,7 @@ export default function useFilters() {
     rating: [],
   });
 
-  const { productList, loading } = useMainPageFetch({ allFilters });
+  const { productList, loading } = useGetProductListing({ allFilters });
 
   const handleFilterChange = useCallback((filterType, value) => {
     setAllFilters((prev) => {

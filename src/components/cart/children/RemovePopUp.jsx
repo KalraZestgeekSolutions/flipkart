@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import {
   Button,
   Modal,
@@ -10,7 +9,7 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import React, { useContext } from "react";
+import React, { useCallback, useContext } from "react";
 import { CartContext } from "@/context/CartContext";
 
 const RemovePopUp = ({ item }) => {
@@ -18,10 +17,11 @@ const RemovePopUp = ({ item }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const finalRef = React.useRef(null);
 
-  const handleRemoveAndCloseModal = () => {
+  const handleRemoveAndCloseModal = useCallback(() => {
     handleRemoveItem(item?.printerId?._id);
     onClose();
-  };
+  }, [handleRemoveItem, item?.printerId?._id, onClose]);
+
   return (
     <>
       <Button variant="none" fontSize="20" onClick={onOpen}>

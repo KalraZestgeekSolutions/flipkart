@@ -1,6 +1,6 @@
 import { Box, GridItem, SkeletonCircle, SkeletonText } from "@chakra-ui/react";
 
-const MainSkeleton = () => {
+const HomePageSkeleton = () => {
   return Array(15)
     .fill("")
     .map((_, index) => (
@@ -36,4 +36,4 @@ const MainSkeleton = () => {
     ));
 };
 
-export default MainSkeleton;
+export {HomePageSkeleton}

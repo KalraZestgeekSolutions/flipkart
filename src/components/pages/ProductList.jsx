@@ -12,7 +12,7 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
-import MainSkeleton from "../skeleton/MainSkeleton";
+import { HomePageSkeleton } from "../skeleton/HomePageSkeleton";
 
 const ProductList = ({ loading, productList }) => {
   return (
@@ -30,7 +30,7 @@ const ProductList = ({ loading, productList }) => {
       gap={[7, 1]}
     >
       {loading ? (
-        <MainSkeleton />
+        <HomePageSkeleton />
       ) : (
         productList.map((product) => (
           <GridItem

@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Box, Button, Input, Stack, Text } from "@chakra-ui/react";
+import { useCallback } from "react";
 
 const SignupInputForm = ({
   signButtonLabel,
@@ -8,13 +9,16 @@ const SignupInputForm = ({
   handleSignUp,
   error,
 }) => {
-  const getErrorMessage = (field) => {
-    const fieldErrors = error.filter((err) => err.path === field);
-    if (fieldErrors.length > 0) {
-      return <Text color="red">{fieldErrors[0].msg}</Text>;
-    }
-    return null;
-  };
+  const getErrorMessage = useCallback(
+    (field) => {
+      const fieldErrors = error.filter((err) => err.path === field);
+      if (fieldErrors.length > 0) {
+        return <Text color="red">{fieldErrors[0].msg}</Text>;
+      }
+      return null;
+    },
+    [error]
+  );
 
   return (
     <form onSubmit={handleSignUp}>
@@ -95,4 +99,4 @@ const SignupInputForm = ({
   );
 };
 
-export default SignupInputForm;
+export { SignupInputForm };

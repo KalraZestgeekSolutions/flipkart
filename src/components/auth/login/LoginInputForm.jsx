@@ -1,4 +1,5 @@
 import { Button, Input, Stack, Text } from "@chakra-ui/react";
+import { useCallback } from "react";
 
 const LoginInputForm = ({
   loginButtonLabel,
@@ -7,13 +8,16 @@ const LoginInputForm = ({
   loginCredentials,
   loginError,
 }) => {
-  const getErrorMessage = (field) => {
-    const fieldErrors = loginError.filter((err) => err.path === field);
-    if (fieldErrors.length > 0) {
-      return <Text color="red">{fieldErrors[0].msg}</Text>;
-    }
-    return null;
-  };
+  const getErrorMessage = useCallback(
+    (field) => {
+      const fieldErrors = loginError?.filter((err) => err.path === field);
+      if (fieldErrors?.length > 0) {
+        return <Text color="red">{fieldErrors[0].msg}</Text>;
+      }
+      return null;
+    },
+    [loginError]
+  );
 
   return (
     <form onSubmit={handleLoginUser}>
